@@ -1,7 +1,0 @@
-module MusicApp
-{
-  interface Music
-  {
-    string sayHello(in string message);
-  };
-};
