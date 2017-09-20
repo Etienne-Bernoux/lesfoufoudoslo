@@ -1,22 +1,21 @@
-package client;
+package server;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-import org.omg.CORBA.ORB;
-import org.omg.CosNaming.NamingContextExt;
-import org.omg.CosNaming.NamingContextExtHelper;
 
+
+import client.FormatRequest;
 import exceptions.UndefinedFonctionException;
-import profileapp.Profiler;
-import profileapp.ProfilerHelper;
+
 import tools.IOFileParsing;
 
-public class ProfilerClient {
+public class Main {
 
-	private static Profiler profilerImpl = null;
+	
+	private static ProfileServant profilerImpl = null;
 	private static final String pathInputFile = "./resources/input.txt";
 	private static final String pathOutputFile = "./resources/output.txt";
 	
@@ -31,18 +30,8 @@ public class ProfilerClient {
 		
 		try
 		{
-			// create and initialize the ORB
-			ORB orb = ORB.init(args, null);
-	
-			// get the root naming context
-			org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService");
-			// Use NamingContextExt instead of NamingContext. This is 
-			// part of the Interoperable naming Service.  
-			NamingContextExt ncRef = NamingContextExtHelper.narrow(objRef);
-	
-			// resolve the Object Reference in Naming
-			String name = "Profiler";
-			profilerImpl = ProfilerHelper.narrow(ncRef.resolve_str(name));
+
+			profilerImpl = new ProfileServant();
 			
 			// open input file
 			br = new BufferedReader(new FileReader(pathInputFile));
@@ -95,5 +84,4 @@ public class ProfilerClient {
 			}
 		}
 	}
-
 }

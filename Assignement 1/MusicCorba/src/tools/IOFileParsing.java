@@ -13,10 +13,11 @@ import client.FormatRequest;
 public class IOFileParsing {
 	
 	
-	public static String[] parseInputLine(String line)
+	public static String[] parseLineTab(String line)
 	{
 		return line.split("\t");
 	}
+
 	
 	public static void writeInOutputLine(int resTimes, FormatRequest fr, long execTimes, String nameFile) throws IOException
 	{

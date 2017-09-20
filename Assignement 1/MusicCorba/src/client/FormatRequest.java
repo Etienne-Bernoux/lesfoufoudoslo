@@ -2,6 +2,9 @@ package client;
 
 public class FormatRequest {
 	
+	private String nameFonction = null;
+	private String songId = null;
+	private String userId = null;
 	
 	public FormatRequest(String[] request)
 	{
@@ -15,7 +18,6 @@ public class FormatRequest {
 			this.userId = request[1];
 			this.songId = request[2];
 		}
-		
 	}
 	
 	public String getNameFonction() {
@@ -32,9 +34,7 @@ public class FormatRequest {
 
 
 	
-	private String nameFonction = null;
-	private String songId = null;
-	private String userId = null;
+
 	
 	
 
