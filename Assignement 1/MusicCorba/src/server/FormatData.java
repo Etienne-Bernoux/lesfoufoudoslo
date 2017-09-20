@@ -22,7 +22,7 @@ public class FormatData {
 		return songId;
 	}
 
-	public Integer getNameFonction() {
+	public Integer getNbPlay() {
 		return nbPlay;
 	}
 	
