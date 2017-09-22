@@ -9,6 +9,44 @@ public class UserCounter implements Comparable<UserCounter> {
 		this.id = id;
 		this.count = count;
 	}
+	
+	
+	/**
+	 * @return the id
+	 */
+	public String getId() {
+		return id;
+	}
+	
+	public Integer getCount() {
+		return count;
+	}
+
+
+	public void add(UserCounter uc){
+		this.count += uc.count;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "UserCounter [id=" + this.id + ", count=" + this.count + "]";
+	}
+
+
+//	/* (non-Javadoc)
+//	 * @see java.lang.Object#hashCode()
+//	 */
+//	@Override
+//	public int hashCode() {
+//		final int prime = 31;
+//		int result = 1;
+//		result = prime * result + ((id == null) ? 0 : id.hashCode());
+//		return result;
+//	}
+
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#equals(java.lang.Object)
@@ -25,26 +63,14 @@ public class UserCounter implements Comparable<UserCounter> {
 			return false;
 		}
 		UserCounter other = (UserCounter) obj;
-		if (count == null) {
-			if (other.count != null) {
-				return false;
-			}
-		} else if (!count.equals(other.count)) {
-			return false;
-		}
-		if (id == null) {
-			if (other.id != null) {
-				return false;
-			}
-		} else if (!id.equals(other.id)) {
-			return false;
-		}
-		return true;
+		
+		return id.equals(other.id);
 	}
 
 	@Override
 	public int compareTo(UserCounter o) {
-		return this.count.compareTo(o.count);
+//		return 1 - this.count.compareTo(o.count);{
+		return o.count.compareTo(this.count);
 	}
 	
 

@@ -36,6 +36,7 @@ public class Main {
 			// open input file
 			br = new BufferedReader(new FileReader(pathInputFile));
 
+
 		    // read the line line per line
 		    String line = null;
 		    while ((line = br.readLine()) != null)

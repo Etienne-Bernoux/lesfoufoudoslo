@@ -9,7 +9,8 @@ public class User {
 	private final Map<String, Song> songs;
 	
 	
-	public User(String id) {
+	public User(String id)
+	{
 		super();
 		this.id = id;
 		this.songs = new HashMap<String, Song>();
@@ -23,6 +24,23 @@ public class User {
 			song.addPlayCount(s.getPlayCount());
 		}
 		this.songs.put(song.getSongId(), song);
+	}
+	
+	public Integer getNbPlaySong(String songId)
+	{
+		Song s = this.songs.get(songId);
+		if (s == null)
+			return 0;
+		else
+			return s.getPlayCount();
+	}
+	
+	public Integer getNbPlay()
+	{
+		Integer res = new Integer(0);
+		for (Song s : this.songs.values())
+			res += s.getPlayCount();
+		return res;
 	}
 	
 	
@@ -70,6 +88,14 @@ public class User {
 			return false;
 		}
 		return true;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", songs=" + songs + "]";
 	}
 	
 	
