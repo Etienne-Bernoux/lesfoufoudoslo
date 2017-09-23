@@ -10,7 +10,7 @@ import org.omg.PortableServer.POAHelper;
 
 
 import profileapp.Profiler;
-import profileapp.ProfilerHelper;;
+import profileapp.ProfilerHelper;
 
 
 public class ProfileServer {

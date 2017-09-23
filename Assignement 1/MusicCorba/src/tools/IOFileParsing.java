@@ -10,7 +10,7 @@ import client.FormatRequest;
  * This class provide all method for parsing the input file and write the output file
  *
  */
-public class IOFileParsing {
+public class  IOFileParsing {
 	
 	
 	public static String[] parseLineTab(String line)
