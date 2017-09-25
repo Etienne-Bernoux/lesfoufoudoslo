@@ -12,10 +12,11 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import model.Song;
-import model.User;
+import model.SongImpl;
+import model.UserImpl;
 import model.UserCounter;
 import profileapp.ProfilerPOA;
+import profileapp.TopTen;
 import tools.IOFileParsing;
 
 public class ProfileServant extends ProfilerPOA {
@@ -24,7 +25,7 @@ public class ProfileServant extends ProfilerPOA {
 	private static final String databaseFile = "./resources/train_triplets.txt";
 	private static final Integer maxUser = 1000;
 	private Map<String, Integer> bufferSongHit = null;
-	private Map<String, User> bufferUserProfile = null;
+	private Map<String, UserImpl> bufferUserProfile = null;
 	
 	ProfileServant(){
 		super();
@@ -35,9 +36,9 @@ public class ProfileServant extends ProfilerPOA {
 
     public class InitThread implements Runnable {
         private Map<String, Integer> bufferSongHit;
-        private Map<String, User> bufferUserProfile;
+        private Map<String, UserImpl> bufferUserProfile;
 
-        InitThread(Map<String, Integer> bufferSongHit, Map<String, User> bufferUserProfile) {
+        InitThread(Map<String, Integer> bufferSongHit, Map<String, UserImpl> bufferUserProfile) {
             this.bufferSongHit = bufferSongHit;
             this.bufferUserProfile = bufferUserProfile;
         }
@@ -131,8 +132,8 @@ public class ProfileServant extends ProfilerPOA {
 
                     if(setTopUSer.contains(curUserId))
                     {
-                        User u = this.bufferUserProfile.get(curUserId) == null ? new User(curUserId) : this.bufferUserProfile.get(curUserId);
-                        Song s = new Song(curFd.getSongId(), curFd.getNbPlay());
+                        UserImpl u = this.bufferUserProfile.get(curUserId) == null ? new UserImpl(curUserId) : this.bufferUserProfile.get(curUserId);
+                        SongImpl s = new SongImpl(curFd.getSongId(), curFd.getNbPlay());
                         u.updateSong(s);
 
                         this.bufferUserProfile.put(curUserId, u);
@@ -161,7 +162,7 @@ public class ProfileServant extends ProfilerPOA {
 	{
 		
 		this.bufferSongHit = new HashMap<String, Integer>();
-		this.bufferUserProfile = new HashMap<String, User>();
+		this.bufferUserProfile = new HashMap<String, UserImpl>();
 		// open input file
 
 		Thread myThread = new Thread(new InitThread(this.bufferSongHit,this.bufferUserProfile));
@@ -270,13 +271,13 @@ public class ProfileServant extends ProfilerPOA {
 		return res.intValue();
 	}
 
-	public User getUserProfile(String user_id,String song_id){
+	public UserImpl getUserProfile(String user_id,String song_id){
 		if(this.bufferUserProfile != null && this.bufferUserProfile.get(user_id) != null)
 		{
 			return this.bufferUserProfile.get(user_id);
 		}
 		else{
-			User res = new User(user_id);
+			UserImpl res = new UserImpl(user_id);
 			BufferedReader br = null;
 			FileReader fr = null;
 			// open input file
@@ -284,19 +285,25 @@ public class ProfileServant extends ProfilerPOA {
 			{
 				fr = new FileReader(databaseFile);
 				br = new BufferedReader(fr);
-
+				// 0 : user not find yet
+				// 1 : user find (in the file) but not finish to collect all song
+				// 2 : finish to collect all song who belong to this user
+				int state = 0;
 				// read the line line per line
 				String line = null;
-				while ((line = br.readLine()) != null)
+				while ((line = br.readLine()) != null && state != 2)
 				{
 					// extract the value of the line
 					String[] parseLine = IOFileParsing.parseLineTab(line);
 					FormatData fd = new FormatData(parseLine);
-					Integer count = fd.getNbPlaySongAndUser(song_id, user_id);
-					if(count.intValue() !=0){
-						Song song = new Song(song_id,count);
-						res.updateSong(song);
+					if(fd.getUserId().equals(user_id)){
+						state = 1;
+						SongImpl s = new SongImpl(fd.getSongId(),fd.getNbPlay());
+						res.updateSong(s);
 					}
+					else
+						if(state == 1)
+							state = 2;
 				}
 
 			}
@@ -314,6 +321,12 @@ public class ProfileServant extends ProfilerPOA {
 
 			return res;
 		}
+	}
+
+	@Override
+	public TopTen getTopTenUsers() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

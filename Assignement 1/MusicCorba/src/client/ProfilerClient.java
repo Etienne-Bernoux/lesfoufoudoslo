@@ -4,12 +4,15 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.omg.CORBA.ORB;
 import org.omg.CosNaming.NamingContextExt;
 import org.omg.CosNaming.NamingContextExtHelper;
 
 import exceptions.UndefinedFonctionException;
+import model.UserImpl;
 import profileapp.Profiler;
 import profileapp.ProfilerHelper;
 import tools.IOFileParsing;
@@ -19,6 +22,12 @@ public class ProfilerClient {
 	private static Profiler profilerImpl = null;
 	private static final String pathInputFile = "./resources/input.txt";
 	private static final String pathOutputFile = "./resources/output.txt";
+	private Map<String, UserImpl> bufferUserProfile = null;
+	
+	public ProfilerClient(){
+		this.bufferUserProfile = new HashMap<String, UserImpl>();
+	}
+	
 	
 	public static void main(String[] args) {
 		
@@ -43,6 +52,8 @@ public class ProfilerClient {
 			// resolve the Object Reference in Naming
 			String name = "Profiler";
 			profilerImpl = ProfilerHelper.narrow(ncRef.resolve_str(name));
+			// create client object
+			ProfilerClient pc = new ProfilerClient();
 			
 			// open input file
 			br = new BufferedReader(new FileReader(pathInputFile));
@@ -66,7 +77,17 @@ public class ProfilerClient {
 	    		}
 	    		else if(fr.getNameFonction().equals("getTimesPlayedByUser")){
 	    			t1 = System.currentTimeMillis();
-		    		times = profilerImpl.getTimesPlayedByUser(fr.getUserId(), fr.getSongId());
+	    			if(pc.bufferUserProfile.containsKey(fr.getUserId())){
+	    			}
+	    			else{
+	    				UserImpl profile = (UserImpl) profilerImpl.getUserProfile(fr.getUserId(), fr.getSongId());
+	    				if(profile == null)
+	    					System.out.println("Profile null");
+	    				else 
+	    					System.out.println(profile);
+	    				pc.bufferUserProfile.put(fr.getUserId(), profile);
+	    			}
+	    			times = pc.bufferUserProfile.get(fr.getUserId()).getNbPlaySong(fr.getSongId());
 		    		t2 = System.currentTimeMillis();
 	    		}
 	    		else

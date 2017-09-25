@@ -1,11 +1,13 @@
 package model;
 
-public class Song {
+import profileapp.Song;
 
-	private final String songId;
+public class SongImpl extends Song {
+
+	private String songId = null;
 	private Integer playCount = null;
 	
-	public Song(String songId, Integer playCount) {
+	public SongImpl(String songId, Integer playCount) {
 		super();
 		this.songId = songId;
 		this.playCount = playCount;
@@ -49,10 +51,10 @@ public class Song {
 		if (obj == null) {
 			return false;
 		}
-		if (!(obj instanceof Song)) {
+		if (!(obj instanceof SongImpl)) {
 			return false;
 		}
-		Song other = (Song) obj;
+		SongImpl other = (SongImpl) obj;
 		if (songId == null) {
 			if (other.songId != null) {
 				return false;

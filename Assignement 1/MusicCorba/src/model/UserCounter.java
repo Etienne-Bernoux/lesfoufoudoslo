@@ -2,7 +2,7 @@ package model;
 
 public class UserCounter implements Comparable<UserCounter> {
 	
-	private final String id;
+	private String id = null;
 	private Integer count = null;
 	public UserCounter(String id, Integer count) {
 		super();

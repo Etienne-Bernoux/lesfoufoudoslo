@@ -3,22 +3,24 @@ package model;
 import java.util.HashMap;
 import java.util.Map;
 
-public class User {
+import profileapp.User;
 
-	private final String id;
-	private final Map<String, Song> songs;
+public class UserImpl extends User {
+
+	private String id = null;
+	private Map<String, SongImpl> songs = null;
 	
 	
-	public User(String id)
+	public UserImpl(String id)
 	{
 		super();
 		this.id = id;
-		this.songs = new HashMap<String, Song>();
+		this.songs = new HashMap<String, SongImpl>();
 	}
 
-	public void updateSong(Song song)
+	public void updateSong(SongImpl song)
 	{
-		Song s = this.songs.get(song.getSongId());
+		SongImpl s = this.songs.get(song.getSongId());
 		if( s != null)
 		{
 			song.addPlayCount(s.getPlayCount());
@@ -28,7 +30,7 @@ public class User {
 	
 	public Integer getNbPlaySong(String songId)
 	{
-		Song s = this.songs.get(songId);
+		SongImpl s = this.songs.get(songId);
 		if (s == null)
 			return 0;
 		else
@@ -38,7 +40,7 @@ public class User {
 	public Integer getNbPlay()
 	{
 		Integer res = new Integer(0);
-		for (Song s : this.songs.values())
+		for (SongImpl s : this.songs.values())
 			res += s.getPlayCount();
 		return res;
 	}
@@ -48,7 +50,7 @@ public class User {
 	public String getId() {
 		return id;
 	}
-	public Map<String, Song> getSongs() {
+	public Map<String, SongImpl> getSongs() {
 		return songs;
 	}
 
@@ -76,10 +78,10 @@ public class User {
 		if (obj == null) {
 			return false;
 		}
-		if (!(obj instanceof User)) {
+		if (!(obj instanceof UserImpl)) {
 			return false;
 		}
-		User other = (User) obj;
+		UserImpl other = (UserImpl) obj;
 		if (id == null) {
 			if (other.id != null) {
 				return false;
