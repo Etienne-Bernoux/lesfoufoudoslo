@@ -13,10 +13,12 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import model.SongImpl;
+import model.TopTenImpl;
 import model.UserImpl;
 import model.UserCounter;
 import profileapp.ProfilerPOA;
 import profileapp.TopTen;
+import profileapp.User;
 import tools.IOFileParsing;
 
 public class ProfileServant extends ProfilerPOA {
@@ -26,6 +28,7 @@ public class ProfileServant extends ProfilerPOA {
 	private static final Integer maxUser = 1000;
 	private Map<String, Integer> bufferSongHit = null;
 	private Map<String, UserImpl> bufferUserProfile = null;
+    private TopTen tt = null;
 	
 	ProfileServant(){
 		super();
@@ -37,10 +40,12 @@ public class ProfileServant extends ProfilerPOA {
     public class InitThread implements Runnable {
         private Map<String, Integer> bufferSongHit;
         private Map<String, UserImpl> bufferUserProfile;
+        private TopTen tt;
 
-        InitThread(Map<String, Integer> bufferSongHit, Map<String, UserImpl> bufferUserProfile) {
+        InitThread(Map<String, Integer> bufferSongHit, Map<String, UserImpl> bufferUserProfile, TopTen tt) {
             this.bufferSongHit = bufferSongHit;
             this.bufferUserProfile = bufferUserProfile;
+            this.tt = tt;
         }
         public void run() {
             BufferedReader br = null;
@@ -49,6 +54,7 @@ public class ProfileServant extends ProfilerPOA {
             // MEMO : Sort on key
             SortedSet<UserCounter> setUserCounter = new TreeSet<UserCounter>();
             Set<String> setTopUSer = new HashSet<String>();
+            Set<String> setTopUSer10 = new HashSet<String>();
 
             try
             {
@@ -103,6 +109,15 @@ public class ProfileServant extends ProfilerPOA {
                         lastUserId = curUserId;
                     }
                 }
+                
+                // Remplir topten
+                //Select Top 1000
+                Iterator<UserCounter> it10 = setUserCounter.iterator();
+                for(int i = 0; i < 10 && it10.hasNext(); i ++)
+                {
+                	
+                    setTopUSer10.add(it10.next().getId());
+                }
 
 
                 System.out.println("Buffer2 1/2 OK");
@@ -120,6 +135,7 @@ public class ProfileServant extends ProfilerPOA {
                 {
                     setTopUSer.add(it.next().getId());
                 }
+         
 
 
                 while ((line = br.readLine()) != null)
@@ -138,8 +154,19 @@ public class ProfileServant extends ProfilerPOA {
 
                         this.bufferUserProfile.put(curUserId, u);
                     }
+                    
                 }
+                
+                
                 System.out.println("Buffer2 2/2 OK");
+                
+                Iterator<String> it102 = setTopUSer10.iterator();
+                for(int i = 0; i < 10 && it10.hasNext(); i ++)
+                {
+                    this.tt.topTenUsers[i] = this.bufferUserProfile.get(it102.next());
+                }
+                
+                
                 System.out.println("Buffer Ready!");
 
 
@@ -163,9 +190,10 @@ public class ProfileServant extends ProfilerPOA {
 		
 		this.bufferSongHit = new HashMap<String, Integer>();
 		this.bufferUserProfile = new HashMap<String, UserImpl>();
+		this.tt = new TopTenImpl();
 		// open input file
 
-		Thread myThread = new Thread(new InitThread(this.bufferSongHit,this.bufferUserProfile));
+		Thread myThread = new Thread(new InitThread(this.bufferSongHit,this.bufferUserProfile, this.tt));
 		myThread.start();
 
 		
@@ -271,7 +299,8 @@ public class ProfileServant extends ProfilerPOA {
 		return res.intValue();
 	}
 
-	public UserImpl getUserProfile(String user_id,String song_id){
+	@Override
+	public User getUserProfile(String user_id,String song_id){
 		if(this.bufferUserProfile != null && this.bufferUserProfile.get(user_id) != null)
 		{
 			return this.bufferUserProfile.get(user_id);
@@ -318,6 +347,11 @@ public class ProfileServant extends ProfilerPOA {
 					try {br.close();}
 					catch (IOException e) {e.printStackTrace();}
 			}
+			System.out.println("##### DEBUG RES return D");
+			System.out.println(res);
+			for(int i = 0; i < res.songs.length && res.songs[i] != null; i ++)
+				System.out.println(" - " + res.songs[i].id);
+			System.out.println("##### DEBUG RES return F");
 
 			return res;
 		}
@@ -325,8 +359,8 @@ public class ProfileServant extends ProfilerPOA {
 
 	@Override
 	public TopTen getTopTenUsers() {
-		// TODO Auto-generated method stub
-		return null;
+		// tt is feed by initBuffer
+		return this.tt;
 	}
 	
 }

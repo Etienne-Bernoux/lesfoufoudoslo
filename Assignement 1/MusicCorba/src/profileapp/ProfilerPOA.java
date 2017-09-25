@@ -69,6 +69,9 @@ public abstract class ProfilerPOA extends org.omg.PortableServer.Servant
          String song_id = in.read_string ();
          profileapp.User $result = null;
          $result = this.getUserProfile (user_id, song_id);
+         System.out.println($result);
+         System.out.println(user_id);
+         System.out.println(song_id);
          out = $rh.createReply();
          profileapp.UserHelper.write (out, $result);
          break;

@@ -1,58 +1,94 @@
 package model;
 
-import java.util.HashMap;
-import java.util.Map;
 
+import profileapp.Song;
 import profileapp.User;
 
 public class UserImpl extends User {
 
-	private String id = null;
-	private Map<String, SongImpl> songs = null;
-	
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6994498448200494145L;
+	private static final int SIZE_SONG = 10000;
+
 	
 	public UserImpl(String id)
 	{
 		super();
 		this.id = id;
-		this.songs = new HashMap<String, SongImpl>();
+		this.songs = new Song[SIZE_SONG];
+	}
+	
+	public UserImpl(String id, Song[] songs)
+	{
+		super();
+		this.id = id;
+		this.songs = songs;
 	}
 
-	public void updateSong(SongImpl song)
+	public void updateSong(Song song)
 	{
-		SongImpl s = this.songs.get(song.getSongId());
-		if( s != null)
-		{
-			song.addPlayCount(s.getPlayCount());
+		boolean find = false;
+		boolean end = false;
+		int i = 0;
+		for(i = 0; i < this.songs.length && !find && !end; i ++){
+			System.out.println("this.songs["+ i+"] = "+ this.songs[i] );
+			
+			if(this.songs[i] == null)
+				end = true;
+			else
+			{
+				if(this.songs[i].id.equals(song))
+				{
+					this.songs[i].play_count +=  song.play_count;
+					find = true;
+				}
+			}
 		}
-		this.songs.put(song.getSongId(), song);
+		// It is 
+		if( !find)
+		{
+			System.out.println("this.songs["+ i+"] <= "+ song );
+			this.songs[i-1] = song;
+		}
 	}
 	
 	public Integer getNbPlaySong(String songId)
 	{
-		SongImpl s = this.songs.get(songId);
-		if (s == null)
-			return 0;
-		else
-			return s.getPlayCount();
+		boolean again = true;
+		for(int i = 0; again; i ++){
+			System.out.println("+1 " + songId);
+			if(this.songs[i] == null)
+			{
+				again = false;
+			}
+			else
+			{
+				if(this.songs[i].id.equals(songId))
+				{
+					return this.songs[i].play_count;
+				}
+			}
+		}
+		System.out.println("UserImpl.getNbPlaySong() => return 0");
+		return new Integer(0);
 	}
 	
 	public Integer getNbPlay()
 	{
 		Integer res = new Integer(0);
-		for (SongImpl s : this.songs.values())
-			res += s.getPlayCount();
+		for (Song s : this.songs)
+		{
+			if(s == null)
+				return res;
+			res += s.play_count;
+		}
 		return res;
 	}
 	
 	
-	/** Getters **/
-	public String getId() {
-		return id;
-	}
-	public Map<String, SongImpl> getSongs() {
-		return songs;
-	}
 
 
 	/* (non-Javadoc)

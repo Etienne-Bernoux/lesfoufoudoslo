@@ -15,6 +15,6 @@ public class UserDefaultFactory implements org.omg.CORBA.portable.ValueFactory {
 
   public java.io.Serializable read_value (org.omg.CORBA_2_3.portable.InputStream is)
   {
-    return is.read_value(new UserImpl (null));
+    return is.read_value(new UserImpl ("",new Song[10000]));
   }
 }

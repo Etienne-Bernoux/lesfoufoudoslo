@@ -15,6 +15,7 @@ import exceptions.UndefinedFonctionException;
 import model.UserImpl;
 import profileapp.Profiler;
 import profileapp.ProfilerHelper;
+import profileapp.User;
 import tools.IOFileParsing;
 
 public class ProfilerClient {
@@ -77,17 +78,18 @@ public class ProfilerClient {
 	    		}
 	    		else if(fr.getNameFonction().equals("getTimesPlayedByUser")){
 	    			t1 = System.currentTimeMillis();
-	    			if(pc.bufferUserProfile.containsKey(fr.getUserId())){
+	    			UserImpl u = pc.bufferUserProfile.get(fr.getUserId());
+	    			System.out.println(u);
+	    			if(u == null){
+	    				System.out.println("Call user Profile");
+	    				u = (UserImpl) profilerImpl.getUserProfile(fr.getUserId(), fr.getSongId());
+//	    				if(u == null)
+//	    					System.out.println("Profile null");
+//	    				else 
+//	    					System.out.println(u);
+	    				pc.bufferUserProfile.put(fr.getUserId(), u);
 	    			}
-	    			else{
-	    				UserImpl profile = (UserImpl) profilerImpl.getUserProfile(fr.getUserId(), fr.getSongId());
-	    				if(profile == null)
-	    					System.out.println("Profile null");
-	    				else 
-	    					System.out.println(profile);
-	    				pc.bufferUserProfile.put(fr.getUserId(), profile);
-	    			}
-	    			times = pc.bufferUserProfile.get(fr.getUserId()).getNbPlaySong(fr.getSongId());
+	    			times = u.getNbPlaySong(fr.getSongId());
 		    		t2 = System.currentTimeMillis();
 	    		}
 	    		else
