@@ -2,6 +2,7 @@ package server;
 
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
@@ -51,8 +52,36 @@ public class ProfileServant extends ProfilerPOA {
     		this.bufferUserProfile = new HashMap<String, UserImpl>();
     		this.tt = new TopTenImpl();
         }
-        public void run() {
-            BufferedReader br = null;
+        
+        private void fillBuffer1() throws IOException
+        {
+        	BufferedReader br = null;
+            FileReader fr = null;
+
+            fr = new FileReader(databaseFile);
+            br = new BufferedReader(fr);
+            // read the line line per line
+            String line = null;
+            while ((line = br.readLine()) != null)
+            {
+                // extract the value of the line
+                String[] parseLine = IOFileParsing.parseLineTab(line);
+                FormatData fd = new FormatData(parseLine);
+
+                // take the value of the of associate song (O if absent)
+                Integer previousValSong = this.bufferSongHit.get(fd.getSongId()) == null ? new Integer(0) : this.bufferSongHit.get(fd.getSongId());
+
+                // add the previous value with the current nbPlay
+                bufferSongHit.put(fd.getSongId(), fd.getNbPlay() + previousValSong);
+
+
+            }
+            br.close();
+            fr.close();
+        }
+        private void fillBuffer2andTopTen() throws IOException
+        {
+        	BufferedReader br = null;
             FileReader fr = null;
 
             // MEMO : Sort on key
@@ -60,132 +89,102 @@ public class ProfileServant extends ProfilerPOA {
             Set<String> setTopUSer = new HashSet<String>();
             Set<String> setTopUSer10 = new HashSet<String>();
 
-            try
+            fr = new FileReader(databaseFile);
+            br = new BufferedReader(fr);
+           
+            String lastUserId = null;
+            Integer scoreTotalUser = 0;
+            // read the line line per line
+            String line = null;
+            while ((line = br.readLine()) != null)
             {
-                fr = new FileReader(databaseFile);
-                br = new BufferedReader(fr);
-                // read the line line per line
-                String line = null;
-                while ((line = br.readLine()) != null)
+                // extract the value of the line
+                String[] parseLine = IOFileParsing.parseLineTab(line);
+                FormatData curFd = new FormatData(parseLine);
+
+                String curUserId = curFd.getUserId();
+                Integer curScore = curFd.getNbPlay();
+
+                // We read a new line of this same user
+                if( curUserId.equals(lastUserId) || lastUserId == null)
                 {
-                    // extract the value of the line
-                    String[] parseLine = IOFileParsing.parseLineTab(line);
-                    FormatData fd = new FormatData(parseLine);
-
-                    // take the value of the of associate song (O if absent)
-                    Integer previousValSong = this.bufferSongHit.get(fd.getSongId()) == null ? new Integer(0) : this.bufferSongHit.get(fd.getSongId());
-
-                    // add the previous value with the current nbPlay
-                    bufferSongHit.put(fd.getSongId(), fd.getNbPlay() + previousValSong);
-
-
+                    scoreTotalUser = scoreTotalUser + curScore;
+                    lastUserId = curUserId;
                 }
-
-                System.out.println("Buffer1 OK");
-                // BUFFER 2 1/2
-                br.close();
-                fr.close();
-                fr = new FileReader(databaseFile);
-                br = new BufferedReader(fr);
-                String lastUserId = null;
-                Integer scoreTotalUser = 0;
-
-                while ((line = br.readLine()) != null)
+                // It is a line from a new user
+                else
                 {
-                    // extract the value of the line
-                    String[] parseLine = IOFileParsing.parseLineTab(line);
-                    FormatData curFd = new FormatData(parseLine);
-
-                    String curUserId = curFd.getUserId();
-                    Integer curScore = curFd.getNbPlay();
-
-                    // We read a new line of this same user
-                    if( curUserId.equals(lastUserId) || lastUserId == null)
-                    {
-                        scoreTotalUser = scoreTotalUser + curScore;
-                        lastUserId = curUserId;
-                    }
-                    // It is a line from a new user
-                    else
-                    {
-                        setUserCounter.add(new UserCounter(lastUserId, scoreTotalUser));
-                        scoreTotalUser = curScore;
-                        lastUserId = curUserId;
-                    }
+                    setUserCounter.add(new UserCounter(lastUserId, scoreTotalUser));
+                    scoreTotalUser = curScore;
+                    lastUserId = curUserId;
                 }
-                
-                // Remplir topten
-                //Select Top 1000
-                Iterator<UserCounter> it10 = setUserCounter.iterator();
-                for(int i = 0; i < 10 && it10.hasNext(); i ++)
-                {
-                	
-                    setTopUSer10.add(it10.next().getId());
-                }
-
-
-                System.out.println("Buffer2 1/2 OK");
-
-                // BUFFER 2 2/2
-                br.close();
-                fr.close();
-                fr = new FileReader(databaseFile);
-                br = new BufferedReader(fr);
-
-
-                //Select Top 1000
-                Iterator<UserCounter> it = setUserCounter.iterator();
-                for(int i = 0; i < maxUser && it.hasNext(); i ++)
-                {
-                    setTopUSer.add(it.next().getId());
-                }
-         
-
-
-                while ((line = br.readLine()) != null)
-                {
-                    // extract the value of the line
-                    String[] parseLine = IOFileParsing.parseLineTab(line);
-                    FormatData curFd = new FormatData(parseLine);
-
-                    String curUserId = curFd.getUserId();
-
-                    if(setTopUSer.contains(curUserId))
-                    {
-                        UserImpl u = this.bufferUserProfile.get(curUserId) == null ? new UserImpl(curUserId) : this.bufferUserProfile.get(curUserId);
-                        SongImpl s = new SongImpl(curFd.getSongId(), curFd.getNbPlay());
-                        u.updateSong(s);
-
-                        this.bufferUserProfile.put(curUserId, u);
-                    }
-                    
-                }
-                
-                
-                System.out.println("Buffer2 2/2 OK");
-                
-                Iterator<String> it102 = setTopUSer10.iterator();
-                for(int i = 0; i < 10 && it10.hasNext(); i ++)
-                {
-                    this.tt.topTenUsers[i] = this.bufferUserProfile.get(it102.next());
-                }
-                
-                
-                System.out.println("Buffer Ready!");
-
-
             }
-            catch(IOException e){
-                e.printStackTrace();
+            
+            // Remplir topten
+            Iterator<UserCounter> it10 = setUserCounter.iterator();
+            for(int i = 0; i < 10 && it10.hasNext(); i ++)
+            {
+                setTopUSer10.add(it10.next().getId());
             }
-            finally {
-                if(fr != null)
-                    try {fr.close();}
-                    catch (IOException e) {e.printStackTrace();}
-                if(br != null)
-                    try {br.close();}
-                    catch (IOException e) {e.printStackTrace();}
+
+            // close and open the buffer to go back to the begining of the file
+            br.close();
+            fr.close();
+            fr = new FileReader(databaseFile);
+            br = new BufferedReader(fr);
+
+            //Select Top 1000
+            Iterator<UserCounter> it = setUserCounter.iterator();
+            for(int i = 0; i < maxUser && it.hasNext(); i ++)
+            {
+                setTopUSer.add(it.next().getId());
             }
+     
+            // Collect the profile of the 1000 most important users
+            while ((line = br.readLine()) != null)
+            {
+                // extract the value of the line
+                String[] parseLine = IOFileParsing.parseLineTab(line);
+                FormatData curFd = new FormatData(parseLine);
+
+                String curUserId = curFd.getUserId();
+
+                if(setTopUSer.contains(curUserId))
+                {
+                    UserImpl u = this.bufferUserProfile.get(curUserId) == null ? new UserImpl(curUserId) : this.bufferUserProfile.get(curUserId);
+                    SongImpl s = new SongImpl(curFd.getSongId(), curFd.getNbPlay());
+                    u.updateSong(s);
+
+                    this.bufferUserProfile.put(curUserId, u);
+                }
+                
+            }
+            
+            // Now have have the profile, we just fill the top ten users
+            Iterator<String> it102 = setTopUSer10.iterator();
+            for(int i = 0; i < 10 && it10.hasNext(); i ++)
+            {
+                this.tt.topTenUsers[i] = this.bufferUserProfile.get(it102.next());
+            }
+            
+            br.close();
+            fr.close();
+        }
+        
+        public void run() {
+            
+        	try {
+				this.fillBuffer1();
+				System.out.println("Buffer 1 : OK");
+	        	this.fillBuffer2andTopTen();
+	        	System.out.println("Buffer 2 : OK");
+	        	System.out.println("Top Ten  : OK");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+
+   
         }
     }
 	
