@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.concurrent.Semaphore;
 
 import model.SongImpl;
 import model.TopTenImpl;
@@ -45,11 +46,18 @@ public class ProfileServant extends ProfilerPOA {
         private Map<String, Integer> bufferSongHit;
         private Map<String, UserImpl> bufferUserProfile;
         private TopTen tt;
+        private Semaphore flagTopTen = new Semaphore(1);
 
         Worker() {
     		this.bufferSongHit = new HashMap<String, Integer>();
     		this.bufferUserProfile = new HashMap<String, UserImpl>();
     		this.tt = new TopTenImpl();
+    		try {
+				this.flagTopTen.acquire();
+			} catch (InterruptedException e) {
+				this.flagTopTen.release();
+				e.printStackTrace();
+			}
         }
         
         private void fillBuffer1() throws IOException
@@ -176,6 +184,7 @@ public class ProfileServant extends ProfilerPOA {
 				this.fillBuffer1();
 				System.out.println("Buffer 1 : OK");
 	        	this.fillBuffer2andTopTen();
+	        	this.flagTopTen.release();
 	        	System.out.println("Buffer 2 : OK");
 	        	System.out.println("Top Ten  : OK");
 			} catch (IOException e) {
@@ -360,7 +369,20 @@ public class ProfileServant extends ProfilerPOA {
 	@Override
 	public TopTen getTopTenUsers() {
 		// tt is feed by our worker
-		return this.worker == null ? null : this.worker.tt;
+		if(this.worker == null)
+			return null;
+		TopTen tt = null;
+		try {
+			this.worker.flagTopTen.acquire();
+			tt = this.worker.tt;
+			this.worker.flagTopTen.release();
+		} catch (InterruptedException e) {
+			this.worker.flagTopTen.release();
+			e.printStackTrace();
+		}
+
+		
+		return tt;
 	}
 	
 }
