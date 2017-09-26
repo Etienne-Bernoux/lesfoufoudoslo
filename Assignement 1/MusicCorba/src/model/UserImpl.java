@@ -82,6 +82,15 @@ public class UserImpl extends User {
 		}
 		return res;
 	}
+
+	public Integer getNbTotalPlay(){
+		Integer totalCount = 0;
+		for (int i =0;i< songs.length && songs[i]!=null;i++) {
+			// System.out.println(songs[i].toString());
+			totalCount += songs[i].play_count;
+		}
+		return totalCount;
+	}
 	
 	
 
@@ -127,11 +136,7 @@ public class UserImpl extends User {
 	 * @see java.lang.Object#toString()
 	 */
 	public String toOutputFormat(){
-		int totalCount = 0;
-		for (int i =0;i< songs.length && songs[i]!=null;i++) {
-			// System.out.println(songs[i].toString());
-			totalCount += songs[i].play_count;
-		}
+		int totalCount = getNbTotalPlay();
 		return (id + " " + totalCount);
 	}
 	@Override
