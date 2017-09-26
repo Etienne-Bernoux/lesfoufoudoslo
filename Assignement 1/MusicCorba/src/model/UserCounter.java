@@ -1,5 +1,11 @@
 package model;
-
+/**
+ * This class is used to order in a most efficient way all the most important users.
+ * 
+ * @author Alexandre Bescond
+ * @author Etienne Bernoux
+ *
+ */
 public class UserCounter implements Comparable<UserCounter> {
 	
 	private String id = null;
