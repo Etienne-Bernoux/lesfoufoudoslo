@@ -28,7 +28,6 @@ public class ProfileServant extends ProfilerPOA {
 	private static final String databaseFile = "./resources/train_triplets.txt";
 	private static final Integer maxUser = 1000;
 	private Worker worker = null;
-    private Boolean enableBuffer = null;
 	
 	ProfileServant(){
 		this(new Boolean(true));
