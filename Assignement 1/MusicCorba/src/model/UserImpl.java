@@ -126,6 +126,14 @@ public class UserImpl extends User {
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
+	public String toOutputFormat(){
+		int totalCount = 0;
+		for (int i =0;i< songs.length && songs[i]!=null;i++) {
+			// System.out.println(songs[i].toString());
+			totalCount += songs[i].play_count;
+		}
+		return (id + " " + totalCount);
+	}
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", songs=" + songs + "]";

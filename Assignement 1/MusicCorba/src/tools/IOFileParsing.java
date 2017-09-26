@@ -37,8 +37,10 @@ public class  IOFileParsing {
 			fw.close();
 		
 	}
-	
-	
+
+
+
+
 	public static void writeInOutputLine(TopTen topten, FormatRequest fr, long execTimes, String nameFile) throws IOException
 	{
 		FileWriter fw = new FileWriter(nameFile, true);

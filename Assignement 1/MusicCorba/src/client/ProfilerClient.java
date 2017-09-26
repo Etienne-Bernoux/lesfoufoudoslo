@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import model.TopTenImpl;
 import org.omg.CORBA.ORB;
 import org.omg.CosNaming.NamingContextExt;
 import org.omg.CosNaming.NamingContextExtHelper;
@@ -15,6 +16,7 @@ import exceptions.UndefinedFonctionException;
 import model.UserImpl;
 import profileapp.Profiler;
 import profileapp.ProfilerHelper;
+import profileapp.TopTen;
 import profileapp.User;
 import tools.IOFileParsing;
 
@@ -23,6 +25,7 @@ public class ProfilerClient {
 	private static Profiler profilerImpl = null;
 	private static final String pathInputFile = "./resources/input.txt";
 	private static final String pathOutputFile = "./resources/output.txt";
+	private static final String pathOutputFileTopTen = "./resources/outputTopTen.txt";
 	private Map<String, UserImpl> bufferUserProfile = null;
 	
 	public ProfilerClient(){
@@ -31,8 +34,10 @@ public class ProfilerClient {
 	
 	
 	public static void main(String[] args) {
-		
-		BufferedReader br = null;
+
+
+
+        BufferedReader br = null;
 		File file = new File(pathOutputFile);
 		// clean output file
 		if (file.exists())
@@ -61,6 +66,16 @@ public class ProfilerClient {
 
 		    // read the line line per line
 		    String line = null;
+
+		    //Get the topTen
+            TopTenImpl tt = (TopTenImpl)profilerImpl.getTopTenUsers();
+            try {
+                tt.writeInOutputFile(pathOutputFileTopTen);
+            } catch (IOException e) {
+                System.out.println("ERROR : " + e) ;
+                e.printStackTrace(System.out);
+            }
+
 		    while ((line = br.readLine()) != null)
 		    {
 		    	String[] tokens = IOFileParsing.parseLineTab(line);
@@ -111,6 +126,9 @@ public class ProfilerClient {
 				catch (IOException e) {e.printStackTrace();}
 			}
 		}
+
+
+
 	}
 
 }
