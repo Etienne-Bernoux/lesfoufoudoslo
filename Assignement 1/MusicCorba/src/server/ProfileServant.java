@@ -26,26 +26,30 @@ public class ProfileServant extends ProfilerPOA {
 //	private static final String databaseFile = "./resources/train_triplets_extract.txt";
 	private static final String databaseFile = "./resources/train_triplets.txt";
 	private static final Integer maxUser = 1000;
-	private Map<String, Integer> bufferSongHit = null;
-	private Map<String, UserImpl> bufferUserProfile = null;
-    private TopTen tt = null;
+	private Worker worker = null;
+    private Boolean enableBuffer = null;
 	
 	ProfileServant(){
+		this(new Boolean(true));
+	}
+	
+	ProfileServant(Boolean enableBuffer){
 		super();
-		this.initBuffers();
-
-		// System.out.println("Buffer Ready!");
+		if(enableBuffer)
+		{
+			this.initBuffers();
+		}
 	}
 
-    public class InitThread implements Runnable {
+    private class Worker implements Runnable {
         private Map<String, Integer> bufferSongHit;
         private Map<String, UserImpl> bufferUserProfile;
         private TopTen tt;
 
-        InitThread(Map<String, Integer> bufferSongHit, Map<String, UserImpl> bufferUserProfile, TopTen tt) {
-            this.bufferSongHit = bufferSongHit;
-            this.bufferUserProfile = bufferUserProfile;
-            this.tt = tt;
+        Worker() {
+    		this.bufferSongHit = new HashMap<String, Integer>();
+    		this.bufferUserProfile = new HashMap<String, UserImpl>();
+    		this.tt = new TopTenImpl();
         }
         public void run() {
             BufferedReader br = null;
@@ -187,13 +191,11 @@ public class ProfileServant extends ProfilerPOA {
 	
 	private void initBuffers()
 	{
-		
-		this.bufferSongHit = new HashMap<String, Integer>();
-		this.bufferUserProfile = new HashMap<String, UserImpl>();
-		this.tt = new TopTenImpl();
+		this.worker = new Worker();
+
 		// open input file
 
-		Thread myThread = new Thread(new InitThread(this.bufferSongHit,this.bufferUserProfile, this.tt));
+		Thread myThread = new Thread(this.worker);
 		myThread.start();
 
 		
@@ -214,9 +216,9 @@ public class ProfileServant extends ProfilerPOA {
 //		System.out.println("Message from client : " + song_id);
 		
 		// if the value of is our cache, we do not go over the file
-		if(this.bufferSongHit != null && this.bufferSongHit.get(song_id) != null)
+		if(this.worker != null && this.worker.bufferSongHit != null && this.worker.bufferSongHit.get(song_id) != null)
 		{
-			return this.bufferSongHit.get(song_id);
+			return this.worker.bufferSongHit.get(song_id);
 		}
 		
 		Integer res = 0;
@@ -259,9 +261,9 @@ public class ProfileServant extends ProfilerPOA {
 		ProfileServant.simulateNetworkLatency();
 		
 		// if the value of is our cache, we do not go over the file
-		if(this.bufferUserProfile != null && this.bufferUserProfile.get(user_id) != null)
+		if(this.worker != null && this.worker.bufferUserProfile != null && this.worker.bufferUserProfile.get(user_id) != null)
 		{
-			return this.bufferUserProfile.get(user_id).getNbPlaySong(song_id);
+			return this.worker.bufferUserProfile.get(user_id).getNbPlaySong(song_id);
 		}
 		
 		Integer res = 0;
@@ -301,9 +303,9 @@ public class ProfileServant extends ProfilerPOA {
 
 	@Override
 	public User getUserProfile(String user_id,String song_id){
-		if(this.bufferUserProfile != null && this.bufferUserProfile.get(user_id) != null)
+		if(this.worker != null && this.worker.bufferUserProfile != null && this.worker.bufferUserProfile.get(user_id) != null)
 		{
-			return this.bufferUserProfile.get(user_id);
+			return this.worker.bufferUserProfile.get(user_id);
 		}
 		else{
 			UserImpl res = new UserImpl(user_id);
@@ -359,8 +361,8 @@ public class ProfileServant extends ProfilerPOA {
 
 	@Override
 	public TopTen getTopTenUsers() {
-		// tt is feed by initBuffer
-		return this.tt;
+		// tt is feed by our worker
+		return this.worker == null ? null : this.worker.tt;
 	}
 	
 }
