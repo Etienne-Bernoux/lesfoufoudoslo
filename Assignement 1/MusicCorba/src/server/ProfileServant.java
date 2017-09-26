@@ -2,7 +2,6 @@ package server;
 
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
@@ -356,11 +355,6 @@ public class ProfileServant extends ProfilerPOA {
 					try {br.close();}
 					catch (IOException e) {e.printStackTrace();}
 			}
-			System.out.println("##### DEBUG RES return D");
-			System.out.println(res);
-			for(int i = 0; i < res.songs.length && res.songs[i] != null; i ++)
-				System.out.println(" - " + res.songs[i].id);
-			System.out.println("##### DEBUG RES return F");
 
 			return res;
 		}

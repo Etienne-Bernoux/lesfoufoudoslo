@@ -79,14 +79,8 @@ public class ProfilerClient {
 	    		else if(fr.getNameFonction().equals("getTimesPlayedByUser")){
 	    			t1 = System.currentTimeMillis();
 	    			UserImpl u = pc.bufferUserProfile.get(fr.getUserId());
-	    			System.out.println(u);
 	    			if(u == null){
-	    				System.out.println("Call user Profile");
 	    				u = (UserImpl) profilerImpl.getUserProfile(fr.getUserId(), fr.getSongId());
-//	    				if(u == null)
-//	    					System.out.println("Profile null");
-//	    				else 
-//	    					System.out.println(u);
 	    				pc.bufferUserProfile.put(fr.getUserId(), u);
 	    			}
 	    			times = u.getNbPlaySong(fr.getSongId());

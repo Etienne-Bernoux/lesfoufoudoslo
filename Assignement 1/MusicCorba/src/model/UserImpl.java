@@ -34,8 +34,6 @@ public class UserImpl extends User {
 		boolean end = false;
 		int i = 0;
 		for(i = 0; i < this.songs.length && !find && !end; i ++){
-			System.out.println("this.songs["+ i+"] = "+ this.songs[i] );
-			
 			if(this.songs[i] == null)
 				end = true;
 			else
@@ -47,10 +45,9 @@ public class UserImpl extends User {
 				}
 			}
 		}
-		// It is 
+		// It is not find so it is a new song to add
 		if( !find)
 		{
-			System.out.println("this.songs["+ i+"] <= "+ song );
 			this.songs[i-1] = song;
 		}
 	}
@@ -59,7 +56,6 @@ public class UserImpl extends User {
 	{
 		boolean again = true;
 		for(int i = 0; again; i ++){
-			System.out.println("+1 " + songId);
 			if(this.songs[i] == null)
 			{
 				again = false;
@@ -72,7 +68,6 @@ public class UserImpl extends User {
 				}
 			}
 		}
-		System.out.println("UserImpl.getNbPlaySong() => return 0");
 		return new Integer(0);
 	}
 	
