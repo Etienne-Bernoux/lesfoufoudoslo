@@ -21,7 +21,7 @@ public class TopTenImpl extends TopTen{
             if (!file.delete())
                 System.err.println("Error : Imposible to clean the output file.");
         for (User user : this.topTenUsers) {
-            System.out.println(user);
+         // System.out.println(user);
             FileWriter fw = new FileWriter(nameFile, true);
             BufferedWriter bw = new BufferedWriter(fw);
             bw.write(((UserImpl)user).toOutputFormat()+ "\n");

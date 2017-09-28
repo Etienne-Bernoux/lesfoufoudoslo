@@ -25,7 +25,8 @@ import tools.IOFileParsing;
 public class ProfileServant extends ProfilerPOA {
 
 //	private static final String databaseFile = "./resources/train_triplets_extract.txt";
-	private static final String databaseFile = "./resources/train_triplets.txt";
+	private static final String databaseFile = "./resources/train_triplets_extract_40000.txt";
+//	private static final String databaseFile = "./resources/train_triplets.txt";
 	private static final Integer maxUser = 1000;
 	private Worker worker = null;
 	
@@ -143,7 +144,10 @@ public class ProfileServant extends ProfilerPOA {
             Iterator<UserCounter> it = setUserCounter.iterator();
             for(int i = 0; i < maxUser && it.hasNext(); i ++)
             {
-                setTopUSer.add(it.next().getId());
+            	UserCounter temp = it.next();
+                setTopUSer.add(temp.getId());
+				System.out.println(temp);
+
             }
      
             // Collect the profile of the 1000 most important users
@@ -162,6 +166,7 @@ public class ProfileServant extends ProfilerPOA {
                     u.updateSong(s);
 
                     this.bufferUserProfile.put(curUserId, u);
+
                 }
                 
             }
