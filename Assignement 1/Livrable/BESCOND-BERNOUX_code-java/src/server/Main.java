@@ -8,7 +8,6 @@ import java.io.IOException;
 
 
 import client.FormatRequest;
-import exceptions.UndefinedFonctionException;
 
 import tools.IOFileParsing;
 
@@ -61,7 +60,7 @@ public class Main {
 	    		}
 	    		else
 	    		{
-	    			throw new UndefinedFonctionException(fr.getNameFonction());
+	    			System.err.println("Unknown function: " + fr.getNameFonction());
 	    		}
 	    		
 	    		

@@ -12,6 +12,10 @@ Student at University of Oslo.
  • Following the simple client/server architecture
  • Handling large data sets in a distributed environment
 
+## Generate Jar
+
+You can regenerate Jar file by execution the powershell script "GenerateJar.ps1".
+
 ## Run
 
 Server.jar: 

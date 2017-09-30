@@ -10,7 +10,6 @@ import org.omg.CORBA.ORB;
 import org.omg.CosNaming.NamingContextExt;
 import org.omg.CosNaming.NamingContextExtHelper;
 
-import exceptions.UndefinedFonctionException;
 import model.UserImpl;
 import profileapp.Profiler;
 import profileapp.ProfilerHelper;
@@ -106,7 +105,8 @@ public class ProfilerClient {
 	    		}
 	    		else
 	    		{
-	    			throw new UndefinedFonctionException(fr.getNameFonction());
+	    			//It is an unknow function.
+	    			System.err.println("Unknown function: " + fr.getNameFonction());
 	    		}
 	    		
 	    		
