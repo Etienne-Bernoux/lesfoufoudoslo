@@ -1,5 +1,4 @@
 ﻿Remove-Item –path ./BESCOND-BERNOUX_code-java/bin/* –recurse
-#rm -rf ./BESCOND-BERNOUX_code-java/bin/*
 New-Item ./BESCOND-BERNOUX_code-java/bin -type directory
 
 
