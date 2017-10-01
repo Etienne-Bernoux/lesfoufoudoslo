@@ -361,20 +361,35 @@ public class ProfileServant extends ProfilerPOA {
 			return res;
 		}
 	}
+	
 
 	@Override
 	public TopTen getTopTenUsers() {
 		// tt is feed by our worker
-		if(this.worker == null)
-			return null;
 		TopTen tt = null;
-		try {
-			this.worker.flagTopTen.acquire();
+		if(this.worker == null)
+		{
+			this.worker = new Worker();
+			try {
+				this.worker.fillBuffer2andTopTen();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			tt = this.worker.tt;
-			this.worker.flagTopTen.release();
-		} catch (InterruptedException e) {
-			this.worker.flagTopTen.release();
-			e.printStackTrace();
+			// don't need worker anymore
+			this.worker = null;
+		}
+		else
+		{
+			try {
+				this.worker.flagTopTen.acquire();
+				tt = this.worker.tt;
+				this.worker.flagTopTen.release();
+			} catch (InterruptedException e) {
+				this.worker.flagTopTen.release();
+				e.printStackTrace();
+			}
 		}
 
 		
