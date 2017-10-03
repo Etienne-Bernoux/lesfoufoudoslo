@@ -48,7 +48,9 @@ public class  IOFileParsing {
 		
 		for(User u : topten.topTenUsers){
 			int nb = 0;
-			for(Song s : u.songs){
+			int i;
+			for(i = 0; i < u.songs.length && u.songs[i] != null; i ++){
+				Song s = u.songs[i];
 				nb = nb + s.play_count;
 			}
 			bw.write(u.id + "\t" + nb + "\n");

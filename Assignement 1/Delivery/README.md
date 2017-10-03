@@ -41,6 +41,8 @@ These two scripts generate:
 • ClientTopTen.jar:
 	Usage: $java -jar ClientTopTen.jar <output file>
 
+• Note: Server need to be launch before client
+
 ## The code
 
 The source code is located at "./BESCOND-BERNOUX_code-java".
@@ -49,6 +51,7 @@ The source code is located at "./BESCOND-BERNOUX_code-java".
 
 • JavaSE 1.8 
 • Permission to run script
+• ORBD must be running while executing the script
 
 ## Help
 

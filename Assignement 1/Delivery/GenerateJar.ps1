@@ -17,6 +17,6 @@ javac -d ./BESCOND-BERNOUX_code-java\bin\ -classpath .\BESCOND-BERNOUX_code-java
 # Shame...
 cd ./BESCOND-BERNOUX_code-java\bin\
 jar cvfe ../../Server.jar server.ProfileServer ./*
-jar cvfe ../../Client.jar client.ProfilerTopTenClient ./*
-jar cvfe ../../ClientTopTen.jar client.ProfilerClient ./*
+jar cvfe ../../ClientTopTen.jar client.ProfilerTopTenClient ./*
+jar cvfe ../../Client.jar client.ProfilerClient ./*
 
