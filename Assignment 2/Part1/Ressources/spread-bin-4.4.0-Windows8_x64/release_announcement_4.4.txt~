@@ -1,0 +1,64 @@
+Spread 4.4.0 http://www.spread.org
+
+Spread Concepts LLC is happy to announce the release of a 
+new release, 4.4.0, of the Spread toolkit. 
+
+The Spread 4.4 release is an important release that incorporates a new,
+accelerated ring protocol.  This protocol is tailored for data center networks 
+and can provide 30%-50% higher throughput and 20-35% lower latency in modern 
+local area networks.  This version also supports Spread's regular ring protocol.
+
+A new AcceleratedRing parameter has been added to Spread's configuration file.
+If this parameter is set to true, then the accelerated ring protocol will be used.  
+If it is set to false, then the regular ring protocol will be used.  If it is left 
+unspecified, then Spread will try to determine which protocol is likely better for 
+your environment.  If your configuration looks like it might be a LAN (i.e. - all 
+daemon IPs are in the same /16 network) rather than a WAN, then Spread will use 
+the accelerated protocol.  Otherwise, it will use the regular protocol.  All the
+daemons in a configuration must use the same ring protocol.  Daemons with different
+protocols will refuse to communicate with one another.
+
+A new AcceleratedWindow parameter, with a value between 0 and the value of the 
+PersonalWindow parameter, should be specified as a flow control parameter in the 
+spread.conf file.  The higher the parameter the more acceleration is expected --
+up to a point.  In our testing on 1Gb/s and 10Gb/s networks, raising it above 20
+had significant negative side effects and actually lowered throughput.  The 
+sample.spread.conf file included in this release has example settings for these 
+parameters that enable the Accelerated Ring protocol, as well as a description of 
+their functions.
+
+The main new features of this release are:
+
+1) Accelerated Ring protocol to improve both throughput and latency in local area networks.
+
+2) Redesigned message-packing, reducing overhead for small messages.
+
+3) Updated MSVS project files for Windows source builds.
+
+4) Several bugfixes that make Spread less likely to exit under high loss.
+
+5) Expanded and improved logging.
+
+For details check the Readme.txt file. 
+
+This release does not include any API changes, so applications should
+be able to be relinked or recompiled with the new Spread library without
+changes. 
+
+The Spread toolkit provides a high performance messaging service
+that is resilient to faults across local and wide area networks.
+Spread functions as a unified message bus for distributed applications, 
+and provides highly tuned application-level multicast, group communication, 
+and point to point support. Spread services range from reliable messaging 
+to fully ordered messages with virtual synchrony delivery guarantees, even in case 
+of computer failures and network partitions.
+
+Please be aware, that under the Spread Open Source License, the toolkit may 
+be freely used only under some conditions. For example, the license includes 
+the requirement that all advertising materials (including web pages) 
+mentioning software that uses Spread display a specific acknowledgment. 
+Please review the license agreement for more details.
+http://www.spread.org/license/
+
+Other commercial licenses or other licensing arrangements are available. 
+Please contact info@spreadconcepts.com. 
