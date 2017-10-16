@@ -1,4 +1,4 @@
-package apps;
+package application;
 
 import java.io.InterruptedIOException;
 import java.net.InetAddress;
@@ -16,8 +16,9 @@ public class SpreadServer {
 	public void init(){
 		connection = new SpreadConnection();
 		try {
-			connection.connect(InetAddress.getByName("rubin.ifi.uio.no"), 4333, "ServerConn", false, true);
-			
+//			connection.connect(InetAddress.getByName("rubin.ifi.uio.no"), 4333, "ServerConn", false, true);
+			connection.connect(InetAddress.getByName("localhost"), 4803, "ServerConn", false, true);
+					
 			SpreadGroup group = new SpreadGroup();
 			group.join(connection, "testGroup");
 			
