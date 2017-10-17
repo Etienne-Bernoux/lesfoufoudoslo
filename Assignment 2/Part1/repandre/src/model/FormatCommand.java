@@ -1,5 +1,6 @@
 package model;
 
+import application.Replica;
 
 public class FormatCommand {
 	
@@ -34,13 +35,14 @@ public class FormatCommand {
 		return this.param2;
 	}
 
-	public void executeOn(Object object) throws UnknowAction {
+	public void executeOn(Replica replica) throws UnknowAction {
 		switch (this.getAction())
 		{
 			case "exit":
 				break;
 				
 			case "balance":
+				replica.sendMessage(this.action);
 				break;
 				
 			case "deposit":
@@ -62,11 +64,5 @@ public class FormatCommand {
 		}
 		
 	}
-
-
-	
-
-	
-	
 
 }

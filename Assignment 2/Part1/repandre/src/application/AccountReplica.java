@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 import model.FormatCommand;
 import model.UnknowAction;
+import spread.SpreadException;
 import tools.IOFileParsing;
 
 public class AccountReplica {
@@ -44,7 +45,7 @@ public class AccountReplica {
 		System.out.println("	by the means of the operating system.");
 	}
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, SpreadException {
 
 		if(args.length != 3 && args.length != 4)
 		{
@@ -53,14 +54,22 @@ public class AccountReplica {
 		}
 
 		String serverAddr = args[0];
-		String accountNane = args[1];
-		String nbReplicas = args[2];
+		String accountName = args[1];
+		Integer nbReplicas = new Integer(args[2]);
 		String fileName = args.length == 4 ? args[3] : null;
+		
+		
+		// Creation of the replica and lanch each listener (light Thread)
+		Replica[] replicas = new Replica[nbReplicas];
+		Thread[] replicasListener = new Thread[nbReplicas];
+		
+		for(int i = 0; i < nbReplicas; i++)
+		{
+			replicas[i] = new Replica(accountName, serverAddr);
+			replicasListener[i] = new Thread(replicas[i]);
+			replicasListener[i].start();
+		}
 
-		System.out.println("Server =" + serverAddr);
-		System.out.println("accountNane =" + accountNane);
-		System.out.println("nbReplicas =" + nbReplicas);
-		System.out.println("fileName =" + fileName);
 		
 		/**
 		 * 
@@ -99,7 +108,7 @@ public class AccountReplica {
 							quit = true;
 						default:
 							try {
-								fc.executeOn(null);
+								fc.executeOn(replicas[i%nbReplicas]);
 							} catch (UnknowAction e) {
 								System.out.println("Unkown action! See help.");
 							}
@@ -123,17 +132,25 @@ public class AccountReplica {
 			br = new BufferedReader(new FileReader(fileName));
 		    String line = null;
 		    FormatCommand fc = null;
-		    
+		    int i = 0;
 		    while ((line = br.readLine()) != null)
 		    {
 		    	 fc = IOFileParsing.getFormatCommandFromLine(line);
 		    	 try {
-					fc.executeOn(null);
+					fc.executeOn(replicas[i%nbReplicas]);
 				} catch (UnknowAction e) {
 					System.out.println("Unkown action! See help.");
 				}
+		    	i ++;
 		    }
 			br.close();
+		}
+		
+		
+		// we stop each thread
+		for(int i = 0; i < nbReplicas; i++)
+		{
+			replicasListener[i].interrupt();
 		}
 		
 	}
