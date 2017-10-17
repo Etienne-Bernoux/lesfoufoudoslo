@@ -1,12 +1,10 @@
 package application;
 
-import java.io.InterruptedIOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Random;
 
-import javax.swing.plaf.synth.SynthSeparatorUI;
-
+import model.Cash;
 import spread.AdvancedMessageListener;
 import spread.SpreadConnection;
 import spread.SpreadException;
@@ -20,6 +18,7 @@ public class Replica implements AdvancedMessageListener  {
 	private String connName = null;
 	private Integer port = null;
 	private static final int RANGE_NAME = 100;
+	private Cash cash = null;
 	
 	private SpreadConnection connection = null;
 	
@@ -40,11 +39,9 @@ public class Replica implements AdvancedMessageListener  {
 		this.groupName = groupName;
 		String[] nameSplit = serverName.split(":");
 		this.serverName = nameSplit[0];
-		this.port = nameSplit.length == 2 ? new Integer(nameSplit[1]) : 4803;
 		this.generateConnectionName();
-		System.out.println("server : " +this.serverName + " port = " + this.port + " name = " + this.connName);
+		this.cash = new Cash();
 		this.init();
-		System.out.println("################");
 	}
 	
 	private void generateConnectionName()
@@ -53,10 +50,6 @@ public class Replica implements AdvancedMessageListener  {
 		int randomInt = randomGenerator.nextInt(RANGE_NAME);
 		this.connName =  "CliNum-" + randomInt;
 	}
-
-
-
-
 
 	/**
 	 * Initialize the connexion on the Spread server and joint de repective group.
@@ -69,6 +62,7 @@ public class Replica implements AdvancedMessageListener  {
 		this.connection.connect(InetAddress.getByName(this.serverName), this.port.intValue(), this.connName, false, true);
 		SpreadGroup group = new SpreadGroup();
 		group.join(this.connection, this.groupName);
+		// This itself as listener in order to received message while sending messages
 		this.connection.add(this);
 				
 	}
@@ -79,7 +73,6 @@ public class Replica implements AdvancedMessageListener  {
 	 */
 	public void sendMessage(String text){
 		SpreadMessage message = new SpreadMessage();
-
 		message.setData(text.getBytes());
 		message.addGroup(this.groupName);
 		message.setReliable();
@@ -103,8 +96,8 @@ public class Replica implements AdvancedMessageListener  {
 
 	@Override
 	public void membershipMessageReceived(SpreadMessage message) {
-		System.out.println(this.connName + " => New membership message from " + message.getSender()  
-		+ "Number of member " + message.getMembershipInfo().getMembers().length);
+		System.out.println(this.connName + " => New membership message from " + message.getSender() 
+		+ ". Number of member " + message.getMembershipInfo().getMembers().length);
 		
 	}
 
