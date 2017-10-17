@@ -21,8 +21,9 @@ public class SpreadClient {
 		
 		connection = new SpreadConnection();
 		try {
-			connection.connect(InetAddress.getByName("rubin.ifi.uio.no"), 4333, connName, false, false);
-			
+			//connection.connect(InetAddress.getByName("rubin.ifi.uio.no"), 4333, connName, false, false);
+			connection.connect(InetAddress.getByName("localhost"), 4803, connName, false, false);
+
 			SpreadGroup group = new SpreadGroup();
 			group.join(connection, "testGroup");
 			
