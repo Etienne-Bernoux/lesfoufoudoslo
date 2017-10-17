@@ -13,7 +13,7 @@ public class  IOFileParsing {
 	
 	public static String[] parseLineTab(String line)
 	{
-		return line.split("\t");
+		return line.split("\t| ");
 	}
 
 	

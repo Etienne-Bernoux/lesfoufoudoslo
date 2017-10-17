@@ -88,6 +88,13 @@ public class Cash {
 	}
 	
 	
+	@Override
+	public String toString()
+	{
+		return this.amount + " " + this.currency;
+	}
+	
+	
 	
 	
 

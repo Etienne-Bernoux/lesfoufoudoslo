@@ -43,6 +43,8 @@ public class AccountReplica {
 		System.out.println("exit");
 		System.out.println("	This command causes the client to exit. Alternatively, the client process can be just killed");
 		System.out.println("	by the means of the operating system.");
+		System.out.println("quit");
+		System.out.println("	This command quit the application and exit every local client.");
 	}
 
 	public static void main(String[] args) throws IOException, SpreadException {
@@ -102,11 +104,11 @@ public class AccountReplica {
 						case "help":
 							AccountReplica.printHelpStatement();
 							break;
-						case "exit":
+						case "quit":
 							quit = true;
 						default:
 							try {
-								fc.executeOn(replicas[i%nbReplicas]);
+								fc.sendWith(replicas[i%nbReplicas]);
 							} catch (UnknowAction e) {
 								System.out.println("Unkown action! See help.");
 							}
@@ -135,7 +137,7 @@ public class AccountReplica {
 		    {
 		    	 fc = IOFileParsing.getFormatCommandFromLine(line);
 		    	 try {
-					fc.executeOn(replicas[i%nbReplicas]);
+					fc.sendWith(replicas[i%nbReplicas]);
 				} catch (UnknowAction e) {
 					System.out.println("Unkown action! See help.");
 				}
@@ -144,11 +146,10 @@ public class AccountReplica {
 			br.close();
 		}
 		
-		
 		// we stop each thread
 		for(int i = 0; i < nbReplicas; i++)
 		{
-			replicasListener[i].interrupt();
+			//TODO
 		}
 		
 	}
