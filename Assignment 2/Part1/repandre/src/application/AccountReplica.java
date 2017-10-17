@@ -66,8 +66,6 @@ public class AccountReplica {
 		for(int i = 0; i < nbReplicas; i++)
 		{
 			replicas[i] = new Replica(accountName, serverAddr);
-			replicasListener[i] = new Thread(replicas[i]);
-			replicasListener[i].start();
 		}
 
 		

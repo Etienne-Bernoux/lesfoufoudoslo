@@ -1,4 +1,4 @@
-package apps;
+package application;
 
 import java.io.InterruptedIOException;
 import java.net.InetAddress;

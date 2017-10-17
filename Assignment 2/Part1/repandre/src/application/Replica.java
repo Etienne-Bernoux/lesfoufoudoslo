@@ -7,12 +7,13 @@ import java.util.Random;
 
 import javax.swing.plaf.synth.SynthSeparatorUI;
 
+import spread.AdvancedMessageListener;
 import spread.SpreadConnection;
 import spread.SpreadException;
 import spread.SpreadGroup;
 import spread.SpreadMessage;
 
-public class Replica implements Runnable {
+public class Replica implements AdvancedMessageListener  {
 	
 	private String groupName = null;
 	private String serverName = null;
@@ -66,9 +67,9 @@ public class Replica implements Runnable {
 		
 		this.connection = new SpreadConnection();
 		this.connection.connect(InetAddress.getByName(this.serverName), this.port.intValue(), this.connName, false, true);
-		
 		SpreadGroup group = new SpreadGroup();
 		group.join(this.connection, this.groupName);
+		this.connection.add(this);
 				
 	}
 	
@@ -92,32 +93,19 @@ public class Replica implements Runnable {
 	}
 	
 	
-	public void receiveMessage(){
-		while(true){
-			try {
-				SpreadMessage message = connection.receive();
-				
-				if(message.isRegular())
-					System.out.println(this.connName + " => New message from " + 
-					message.getSender() + ": " + new String(message.getData()));
-				else
-					System.out.println(this.connName + " => New membership message from " + message.getSender()  
-					+ "Number of member " + message.getMembershipInfo().getMembers().length);
-				
-			} catch (InterruptedIOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SpreadException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 
-		}
-	}
-	
 	@Override
-	public void run() {
-		this.receiveMessage();
+	public void regularMessageReceived(SpreadMessage message) {
+		System.out.println(this.connName + " => New message from " + 
+		message.getSender() + ": " + new String(message.getData()));
+		
+	}
+
+	@Override
+	public void membershipMessageReceived(SpreadMessage message) {
+		System.out.println(this.connName + " => New membership message from " + message.getSender()  
+		+ "Number of member " + message.getMembershipInfo().getMembers().length);
+		
 	}
 
 }
