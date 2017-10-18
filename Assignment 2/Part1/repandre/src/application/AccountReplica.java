@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -61,13 +63,12 @@ public class AccountReplica {
 		String fileName = args.length == 4 ? args[3] : null;
 		
 		
-		// Creation of the replica and lanch each listener (light Thread)
-		Replica[] replicas = new Replica[nbReplicas];
-		Thread[] replicasListener = new Thread[nbReplicas];
+		// Creation of the replica and launch each listener
+		List<Replica> replicas = new ArrayList<Replica>(nbReplicas);
 		
 		for(int i = 0; i < nbReplicas; i++)
 		{
-			replicas[i] = new Replica(accountName, serverAddr);
+			replicas.add(new Replica(accountName, serverAddr));
 		}
 
 		
@@ -91,30 +92,53 @@ public class AccountReplica {
 
 			while(!quit)
 			{
-				System.out.print("["+ i + "]: ");
-				System.out.flush();
-				line = br.readLine();
-				m = emptyLine.matcher(line);
-				// If we do not have an empty line
-				if(!m.find())
+				
+				Replica repToUse = null;
+				while(repToUse == null)
 				{
-					fc = IOFileParsing.getFormatCommandFromLine(line);
-					switch (fc.getAction())
+					repToUse = replicas.get(i%nbReplicas);
+					if(repToUse.isDisconnected())
 					{
-						case "help":
-							AccountReplica.printHelpStatement();
-							break;
-						case "quit":
+						replicas.remove(i%nbReplicas);
+						nbReplicas = nbReplicas - 1;
+						if(nbReplicas.equals(new Integer(0)))
+						{
 							quit = true;
-						default:
-							try {
-								fc.sendWith(replicas[i%nbReplicas]);
-							} catch (UnknowAction e) {
-								System.out.println("Unkown action! See help.");
-							}
+						}
+						repToUse = null;
 					}
-					
-					i = i + 1;
+				}
+				if(nbReplicas.equals(new Integer(0)))
+				{
+					quit = true;
+				}
+				else
+				{
+					System.out.print("["+ i + "]: ");
+					System.out.flush();
+					line = br.readLine();
+					m = emptyLine.matcher(line);
+					// If we do not have an empty line
+					if(!m.find())
+					{
+						fc = IOFileParsing.getFormatCommandFromLine(line);
+						switch (fc.getAction())
+						{
+							case "help":
+								AccountReplica.printHelpStatement();
+								break;
+							case "quit":
+								quit = true;
+							default:
+								try {
+									fc.sendWith(replicas.get(i%nbReplicas));
+								} catch (UnknowAction e) {
+									System.out.println("Unkown action! See help.");
+								}
+						}
+						
+						i = i + 1;
+					}
 				}
 			}
 			
@@ -137,7 +161,7 @@ public class AccountReplica {
 		    {
 		    	 fc = IOFileParsing.getFormatCommandFromLine(line);
 		    	 try {
-					fc.sendWith(replicas[i%nbReplicas]);
+					fc.sendWith(replicas.get(i%nbReplicas));
 				} catch (UnknowAction e) {
 					System.out.println("Unkown action! See help.");
 				}

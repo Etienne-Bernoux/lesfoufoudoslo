@@ -1,26 +1,23 @@
-AB    1508277754
-M    1508277756    1508277758           0 >   0
-AC    1508277762           0 508 127.0.0.1        CliNum-71 
-AC    1508277764           0 512 127.0.0.1        CliNum-32 
-AM    1508277764    1508277765           0 >   0
-AD    1508277764           1 508 127.0.0.1        CliNum-71  0
-AD    1508277764           2 512 127.0.0.1        CliNum-32  0
-AC    1508277774           3 512 127.0.0.1        CliNum-40 
-AC    1508277778           3 532 127.0.0.1        CliNum-69 
-AM    1508277781    1508277783           3 >   0
-AAAAAAAAM    1508277856    1508277857           2 >   0
-AAM    1508277866    1508277867           0 >   0
-AM    1508277874    1508277876           0 >   0
-AAAAAAAAAAAAAAAD    1508278019           0 512 127.0.0.1        CliNum-40  0
-AD    1508278019           1 532 127.0.0.1        CliNum-69  0
-AC    1508278024           2 296 127.0.0.1        CliNum-79 
-AC    1508278028           2 476 127.0.0.1        CliNum-84 
-AM    1508278031    1508278033           2 >   0
-AAAAAAD    1508278082           2 296 127.0.0.1        CliNum-79  0
-AD    1508278082           3 476 127.0.0.1        CliNum-84  0
-AC    1508278086           4 476 127.0.0.1        CliNum-37 
-AM    1508278086    1508278088           4 >   0
-AC    1508278088           0 436 127.0.0.1        CliNum-39 
+AB    1508322422
+M    1508322424    1508322426           0 >   0
+AAAAAAAAAAAAAAAAAAAAAAAC    1508322646           0 476 127.0.0.1        CliNum-98 
+AC    1508322646           1 464 127.0.0.1        CliNum-8  
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD    1508322950           9 476 127.0.0.1        CliNum-98  0
+AD    1508322950          10 464 127.0.0.1        CliNum-8   0
+AC    1508322953          11 464 127.0.0.1        CliNum-23 
+AC    1508322953          12 328 127.0.0.1        CliNum-44 
+AAAAAAAAAAAAD    1508323068          21 464 127.0.0.1        CliNum-23  0
+AD    1508323068          22 328 127.0.0.1        CliNum-44  0
+AC    1508323072          23 476 127.0.0.1        CliNum-45 
+AC    1508323072          24 516 127.0.0.1        CliNum-7  
+AAD    1508323089          27 516 127.0.0.1        CliNum-7   0
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD    1508324227          28 476 127.0.0.1        CliNum-45  0
+AAAAAC    1508324269          29 516 127.0.0.1        CliNum-19 
+AC    1508324269          30 476 127.0.0.1        CliNum-90 
+AAAD    1508324290          36 476 127.0.0.1        CliNum-90  0
+AAAD    1508324317          41 516 127.0.0.1        CliNum-19  0
+AAAAAAAA    1508324387          42
+27.0.0.1        CliNum-39 
 AM    1508278089    1508278091           0 >   0
 AAAAAAAAAAAD    1508278192           2 476 127.0.0.1        CliNum-37  0
 AD    1508278192           3 436 127.0.0.1        CliNum-39  0

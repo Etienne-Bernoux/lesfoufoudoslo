@@ -84,6 +84,7 @@ public class Replica implements AdvancedMessageListener  {
 		message.setData(text.getBytes());
 		message.addGroup(this.groupName);
 		message.setReliable();
+		message.setFifo();
 		
 		try {
 			connection.multicast(message);
@@ -125,7 +126,15 @@ public class Replica implements AdvancedMessageListener  {
 	 */
 	public void exit() {
 		try {
-			this.connection.disconnect();
+			if(!this.connection.isConnected())
+			{
+				this.connection.disconnect();
+			}
+			else
+			{
+				System.out.println("CLIENT WAS DISCONNECTED");
+				this.connection.disconnect();
+			}
 		} catch (SpreadException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -201,6 +210,10 @@ public class Replica implements AdvancedMessageListener  {
 
 	public void exit(SpreadGroup sender) {
 		this.listReplica.remove(sender.toString());
+	}
+
+	public boolean isDisconnected() {
+		return !this.connection.isConnected();
 	}
 
 
