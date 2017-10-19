@@ -1,9 +1,6 @@
 package tools;
 
-
-
 import model.FormatCommand;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * This class provide all method for parsing the input file, and command line
