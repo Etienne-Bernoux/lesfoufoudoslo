@@ -1,16 +1,14 @@
 package application;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import model.FormatCommand;
-import model.UnknowAction;
+import model.UnknownAction;
 import spread.SpreadException;
 import tools.IOFileParsing;
 
@@ -33,7 +31,7 @@ public class AccountReplica {
 		System.out.println("");
 		System.out.println("exchange <from> <to>");
 		System.out.println("	Exchanges the currency from e.g. NOK to USD. Support these currencies only: NOK,");
-		System.out.println("	USD and EUR. Look at the “Currency table” down below for exchange rates.");
+		System.out.println("	USD and EUR. Look at the ï¿½Currency tableï¿½ down below for exchange rates.");
 		System.out.println("");
 		System.out.println("memberinfo");
 		System.out.println("	Returns the names of the current participants in the group, and prints it to the screen.");
@@ -49,7 +47,7 @@ public class AccountReplica {
 		System.out.println("	This command quit the application and exit every local client.");
 	}
 
-	public static void main(String[] args) throws IOException, SpreadException {
+	public static void main(String[] args) throws SpreadException, IOException {
 
 		if(args.length != 3 && args.length != 4)
 		{
@@ -92,7 +90,6 @@ public class AccountReplica {
 
 			while(!quit)
 			{
-				
 				Replica repToUse = null;
 				while(repToUse == null)
 				{
@@ -116,36 +113,40 @@ public class AccountReplica {
 				{
 					System.out.print("["+ i + "]: ");
 					System.out.flush();
-					line = br.readLine();
-					m = emptyLine.matcher(line);
-					// If we do not have an empty line
-					if(!m.find())
-					{
-						fc = IOFileParsing.getFormatCommandFromLine(line);
-						switch (fc.getAction())
+						line = br.readLine();
+						m = emptyLine.matcher(line);
+						// If we do not have an empty line
+						if(!m.find())
 						{
-							case "help":
-								AccountReplica.printHelpStatement();
-								break;
-							case "quit":
-								quit = true;
-							default:
-								try {
-									fc.sendWith(replicas.get(i%nbReplicas));
-								} catch (UnknowAction e) {
-									System.out.println("Unkown action! See help.");
-								}
-						}
-						
-						i = i + 1;
-					}
-				}
-			}
-			
-			System.out.println("Ciao!");
+							fc = IOFileParsing.getFormatCommandFromLine(line);
+							switch (fc.getAction())
+							{
+								case "help":
+									AccountReplica.printHelpStatement();
+									break;
+								case "quit":
+									quit = true;
+									break;
+								default:
+									try {
+										fc.sendWith(replicas.get(i%nbReplicas));
+									} catch (UnknownAction e) {
+										System.out.println("Unkown action! See help.");
+									}
+							}
 
+							i = i + 1;
+						}
+
+
+
+
+				}
+
+			}
 			br.close();
 			
+			System.out.println("Ciao!");
 
 		}
 		// Then we execute the file
@@ -153,21 +154,33 @@ public class AccountReplica {
 		{
 			BufferedReader br = null;
 			// open input file
-			br = new BufferedReader(new FileReader(fileName));
-		    String line = null;
-		    FormatCommand fc = null;
-		    int i = 0;
-		    while ((line = br.readLine()) != null)
-		    {
-		    	 fc = IOFileParsing.getFormatCommandFromLine(line);
-		    	 try {
-					fc.sendWith(replicas.get(i%nbReplicas));
-				} catch (UnknowAction e) {
-					System.out.println("Unkown action! See help.");
+			try {
+				br = new BufferedReader(new FileReader(fileName));
+				String line = null;
+				FormatCommand fc = null;
+				int i = 0;
+				while ((line = br.readLine()) != null)
+				{
+					fc = IOFileParsing.getFormatCommandFromLine(line);
+					try {
+						fc.sendWith(replicas.get(i%nbReplicas));
+					} catch (UnknownAction e) {
+						System.out.println("Unknown action! See help.");
+					}
+					i ++;
 				}
-		    	i ++;
-		    }
-			br.close();
+			} catch (IOException e) {
+				System.out.println("File reading error");
+			}finally {
+				try {
+					if(br != null){
+						br.close();
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+
 		}
 		
 		// we stop each thread

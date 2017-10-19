@@ -3,6 +3,7 @@ package tools;
 
 
 import model.FormatCommand;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * This class provide all method for parsing the input file, and command line
@@ -10,7 +11,7 @@ import model.FormatCommand;
  */
 public class  IOFileParsing {
 	
-	
+
 	public static String[] parseLineTab(String line)
 	{
 		return line.split("\t| ");

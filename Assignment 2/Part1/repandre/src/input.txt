@@ -1,0 +1,7 @@
+deposit 100
+deposit 150
+exchange NOK USD
+sleep 10
+addinterest 5
+deposit 100
+balance

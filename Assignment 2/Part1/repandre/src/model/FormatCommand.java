@@ -8,6 +8,7 @@ public class FormatCommand {
 	private String action = null;
 	private String param1 = null;
 	private String param2 = null;
+	private SpreadGroup sender = null;
 	
 	public FormatCommand(String[] request)
 	{
@@ -36,7 +37,7 @@ public class FormatCommand {
 		return this.param2;
 	}
 
-	public void sendWith(Replica replica) throws UnknowAction {
+	public void sendWith(Replica replica) throws UnknownAction {
 		switch (this.getAction())
 		{
 			case "exit":
@@ -48,31 +49,44 @@ public class FormatCommand {
 				break;
 				
 			case "deposit":
+			    if(this.getParam1() == null){
+                    throw new UnknownAction(this.action);
+                }
 				replica.sendMessage(this.getAction() + " " + this.getParam1());
 				break;
 				
 			case "addinterest":
+                if(this.getParam1() == null){
+                    throw new UnknownAction(this.action);
+                }
 				replica.sendMessage(this.getAction() + " " + this.getParam1());
 				break;
 				
 			case "exchange":
+                if(this.getParam1() == null || this.getParam2() == null){
+                    throw new UnknownAction(this.action);
+                }
 				replica.sendMessage(this.getAction() + " " + this.getParam1() + " " + this.getParam2());
 				break;
 				
 			case "memberinfo":
+
 				replica.sendMessage(this.getAction());
 				break;
 				
 			case "sleep":
+                if(this.getParam1() == null){
+                    throw new UnknownAction(this.action);
+                }
 				replica.sendMessage(this.getAction() + " " + this.getParam1());
 				break;
 			default:
-				throw new UnknowAction(this.action);
+				throw new UnknownAction(this.action);
 		}
 		
 	}
 
-	private void performItsOwnMesageOn(Replica replica) throws UnknowAction {
+	private void performItsOwnMessageOn(Replica replica) throws UnknownAction {
 		switch (this.getAction())
 		{
 			case "exit":
@@ -92,15 +106,8 @@ public class FormatCommand {
 				break;
 				
 			case "exchange":
-				if (this.param2.equals("NOK"))
-					replica.exchangeNOK();
-				else if (this.param2.equals("EUR"))
-					replica.exchangeEUR();
-				else if (this.param2.equals("USD"))
-					replica.exchangeUSD();
-				else
-					throw new UnknowAction(this.action + " " + this.param1 + " " + this.param2);
-				break;
+                replica.exchange(this.getParam1(),this.getParam2());
+                break;
 				
 			case "memberinfo":
 				replica.memberinfo();
@@ -109,13 +116,15 @@ public class FormatCommand {
 			case "sleep":
 				replica.sleep(new Integer(this.param1));
 				break;
+            case "welcome":
+                break;
 			default:
-				throw new UnknowAction(this.action);
+				throw new UnknownAction(this.action);
 		}
 	}
 	
 	
-	private void performMesageOnFromOtherSender(Replica replica, SpreadGroup sender) throws UnknowAction {
+	private void performMessageOnFromOtherSender(Replica replica) throws UnknownAction {
 		switch (this.getAction())
 		{
 			case "exit":
@@ -127,47 +136,79 @@ public class FormatCommand {
 				break;
 				
 			case "deposit":
+                if(this.getParam1() == null){
+                    throw new UnknownAction(this.action);
+                }
 				replica.deposit(new Float(this.getParam1()));
 				break;
 				
 			case "addinterest":
+                if(this.getParam1() == null){
+                    throw new UnknownAction(this.action);
+                }
 				replica.addinterest(new Float(this.getParam1()));
 				break;
 				
 			case "exchange":
-				if (this.param2.equals("NOK"))
-					replica.exchangeNOK();
-				else if (this.param2.equals("EUR"))
-					replica.exchangeEUR();
-				else if (this.param2.equals("USD"))
-					replica.exchangeUSD();
-				else
-					throw new UnknowAction(this.action + " " + this.param1 + " " + this.param2);
-				
+                if(this.getParam1() == null || this.getParam2() == null){
+                    throw new UnknownAction(this.action);
+                }
+                replica.exchange(this.getParam1(),this.getParam2());
 				break;
 				
 			case "memberinfo":
-
 				break;
 				
 			case "sleep":
-
 				break;
+            case "welcome":
+                break;
 			default:
-				throw new UnknowAction(this.action);
+				throw new UnknownAction(this.action);
 		}
 	}
 
-	public void performActionOnFrom(Replica replica, SpreadGroup sender) throws UnknowAction {
-		if(sender.toString().split("#")[1].equals(replica.getConnName()))
-		{
-			this.performItsOwnMesageOn(replica);
-		}
-		else
-		{
-			this.performMesageOnFromOtherSender(replica, sender);
-		}
-		
+    /**
+     * Action to do when receive a message during init phase.
+     * @param replica
+     * @throws UnknownAction
+     */
+    private void performMessageInit(Replica replica) throws UnknownAction {
+        switch (this.getAction())
+        {
+            // If it's a welcome message, we put a value in the hash map to count the occurrence of the same Cash object
+            case "welcome":
+                Cash myCash = new Cash(new Float(this.getParam1()),this.getParam2());
+                Integer nbHit = replica.getMapCash().get(myCash);
+                replica.getMapCash().put(myCash, nbHit == null? 1 : nbHit+1);
+                replica.getListReplica().add(this.sender.toString());
+                break;
+            default:
+                replica.getQueue().add(this);
+        }
+    }
+    public void performMessageInQueue(Replica replica) throws UnknownAction {
+        if (this.sender.toString().split("#")[1].equals(replica.getConnName())) {
+            this.performItsOwnMessageOn(replica);
+        } else {
+            this.performMessageOnFromOtherSender(replica);
+        }
+    }
+	public void performActionOnFrom(Replica replica) throws UnknownAction {
+		if (replica.isReady()) {
+            if (this.sender.toString().split("#")[1].equals(replica.getConnName())) {
+                this.performItsOwnMessageOn(replica);
+            } else {
+                this.performMessageOnFromOtherSender(replica);
+            }
+		} else {
+                this.performMessageInit(replica);
+        }
+
+
 	}
 
+    public void setSender(SpreadGroup sender) {
+        this.sender = sender;
+    }
 }

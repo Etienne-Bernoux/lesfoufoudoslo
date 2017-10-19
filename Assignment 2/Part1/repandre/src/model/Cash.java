@@ -13,8 +13,25 @@ public class Cash {
 		this.currency = Currency.NOK;
 		this.amount = new Float(0);
 	}
-	
-	
+
+	public Cash( Float amount, String currency) {
+		switch (currency){
+			case "NOK":
+				this.currency= Currency.NOK;
+				break;
+			case "EUR":
+				this.currency = Currency.EUR;
+				break;
+			case "USD":
+				this.currency = Currency.USD;
+				break;
+			default:
+				throw new ErrorCurrency(currency);
+		}
+
+		this.amount = amount;
+	}
+
 	public void toUSD()
 	{
 		if(this.currency.equals(Currency.USD))
@@ -93,9 +110,22 @@ public class Cash {
 	{
 		return this.amount + " " + this.currency;
 	}
-	
-	
-	
-	
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Cash cash = (Cash) o;
+
+		if (currency != cash.currency) return false;
+		return amount != null ? amount.equals(cash.amount) : cash.amount == null;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = currency != null ? currency.hashCode() : 0;
+		result = 31 * result + (amount != null ? amount.hashCode() : 0);
+		return result;
+	}
 }

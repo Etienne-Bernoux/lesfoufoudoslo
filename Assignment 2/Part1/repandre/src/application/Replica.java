@@ -2,13 +2,13 @@ package application;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
-import model.Cash;
-import model.FormatCommand;
-import model.UnknowAction;
+import model.*;
 import spread.AdvancedMessageListener;
 import spread.SpreadConnection;
 import spread.SpreadException;
@@ -16,7 +16,7 @@ import spread.SpreadGroup;
 import spread.SpreadMessage;
 import tools.IOFileParsing;
 
-public class Replica implements AdvancedMessageListener  {
+public class Replica implements Runnable, AdvancedMessageListener  {
 	
 	private String groupName = null;
 	private String serverName = null;
@@ -24,13 +24,13 @@ public class Replica implements AdvancedMessageListener  {
 	private Integer port = null;
 	private static final int RANGE_NAME = 100;
 	private Cash cash = null;
-	
+	private State state = null;
+
 	private SpreadConnection connection = null;
 	private Set<String> listReplica = null;
-	
-	
-	
-	
+
+	private Queue<FormatCommand> queue = null;
+	private Map<Cash,Integer> mapCash = null;
 	/**
 	 * 
 	 * @param groupName name of the group connection 
@@ -49,6 +49,9 @@ public class Replica implements AdvancedMessageListener  {
 		this.generateConnectionName();
 		this.cash = new Cash();
 		this.listReplica = new HashSet<String>();
+		this.state = State.INIT;
+		this.queue = new ConcurrentLinkedQueue<FormatCommand>();
+		this.mapCash = new HashMap<Cash,Integer>();
 		this.init();
 	}
 	
@@ -72,7 +75,10 @@ public class Replica implements AdvancedMessageListener  {
 		group.join(this.connection, this.groupName);
 		// This itself as listener in order to received message while sending messages
 		this.connection.add(this);
-				
+		//Event scheduler
+        ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+        // In 500 mS we will launch an event who we will process all the welcome message received
+        executor.schedule(this,500, TimeUnit.MILLISECONDS);
 	}
 	
 	/**
@@ -93,18 +99,32 @@ public class Replica implements AdvancedMessageListener  {
 			e.printStackTrace();
 		}
 	}
-	
+
+	public void sendWelcomeMessage(){
+		SpreadMessage message = new SpreadMessage();
+		message.setData(("welcome " + this.cash).getBytes());
+		message.addGroup(this.groupName);
+		message.setReliable();
+		message.setFifo();
+
+		try {
+			connection.multicast(message);
+		} catch (SpreadException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 
 	@Override
 	public void regularMessageReceived(SpreadMessage message) {
 //		System.out.println(this.getConnName() + " => New message from " + 
 //		message.getSender() + ": " + new String(message.getData()));
-		
 		FormatCommand fc = IOFileParsing.getFormatCommandFromLine(new String(message.getData()));
+		fc.setSender(message.getSender());
 		try {
-			fc.performActionOnFrom(this,message.getSender());
-		} catch (UnknowAction e) {
+			fc.performActionOnFrom(this);
+		} catch (UnknownAction e) {
 			System.out.println("Action unknown!");
 		}
 		
@@ -118,7 +138,9 @@ public class Replica implements AdvancedMessageListener  {
 		
 		for(SpreadGroup s : message.getGroups())
 			this.listReplica.add(s.toString());
-	}
+        if(this.isReady())
+            this.sendWelcomeMessage();
+    }
 
 	
 	/**
@@ -167,18 +189,27 @@ public class Replica implements AdvancedMessageListener  {
 		this.cash.addinterest(percentage);
 		
 	}
-	
-	public void exchangeNOK()
+	public void exchange(String from, String to) throws UnknownCurrency {
+        if (to.equals("NOK"))
+            this.exchangeNOK();
+        else if (to.equals("EUR"))
+            this.exchangeEUR();
+        else if (to.equals("USD"))
+            this.exchangeUSD();
+        else
+            throw new UnknownCurrency(to);
+    }
+	private void exchangeNOK()
 	{
 		this.cash.toNOK();
 	}
-	
-	public void exchangeEUR()
+
+    private void exchangeEUR()
 	{
 		this.cash.toEUR();
 	}
 
-	public void exchangeUSD()
+    private void exchangeUSD()
 	{
 		this.cash.toUSD();
 	}
@@ -216,7 +247,63 @@ public class Replica implements AdvancedMessageListener  {
 		return !this.connection.isConnected();
 	}
 
+	public boolean isReady() {
+		return this.state == State.READY;
+	}
+    public boolean isInQueue() {
+        return this.state == State.IN_QUEUE;
+    }
+    public boolean isInit() {
+        return this.state == State.INIT;
+    }
 
+	public Queue<FormatCommand> getQueue() {
+		return queue;
+	}
+
+	public Map<Cash,Integer> getMapCash() {
+		return mapCash;
+	}
+
+    public Set<String> getListReplica() {
+        return listReplica;
+    }
+
+    /**
+     * This method is call when the timeout for welcome message reception occur.
+     * We use a timeout because we don't know the number of replica
+     */
+    @Override
+    public void run() {
+        int max = 0;
+        int somme = 0;
+        Cash bestCash = new Cash();
+        for (Map.Entry<Cash,Integer> entry: mapCash.entrySet()){
+            if(entry.getValue()>max){
+                max = entry.getValue();
+                bestCash = entry.getKey();
+            }
+            somme += entry.getValue();
+        }
+        // We use the Byzantine assumption to determine i
+        if (somme == 0 || (max/somme>2/3)){
+            this.cash = bestCash;
+            this.state = State.IN_QUEUE;
+
+            while (!this.getQueue().isEmpty()){
+                try {
+                    this.getQueue().poll().performMessageInQueue(this);
+                } catch (UnknownAction unknownAction) {
+                    unknownAction.printStackTrace();
+                }
+            }
+            this.state = State.READY;
+        }else{
+            throw new ByzantineError();
+        }
+
+
+    }
 
 
 }
