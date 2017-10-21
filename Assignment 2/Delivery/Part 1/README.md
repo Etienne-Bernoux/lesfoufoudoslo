@@ -3,45 +3,55 @@ BERNOUX Etienne			etiennb@student.matnat.uio.no
 
 Student at University of Oslo.
 
-# Open distributed processing - Assignment n°1
+# Open distributed processing - Assignment n°2
 
 
 ## Goals 
- • To develop an object based distributed system
- • Using the CORBA programming model and middleware
- • Following the simple client/server architecture
- • Handling large data sets in a distributed environment
+
+ • Develop a distributed application that models a replicated bank account.
+ • The implementation should follow the “replicated state machine” paradigm on top of group communication.
+ • Using the Spread Toolkit
 
 ## Generate Jar
 
 • Windows:
 You can regenerate Jar file by execution the powershell script "GenerateJar.ps1".
-• Unix:
-You can regenerate Jar file by execution the shell script "GenerateJar.sh".
 
-These two scripts generate:
- ./Server.jar
- ./Client.jar
- ./ClientTopTen.jar
+This scripts generate:
+ ./repandre.jar
 
 ## Run
 
-• Server.jar: 
-	Usage: $java -jar Server.jar True|False <song file>
+• repandre.jar: 
+	Usage: $java -jar repandre <server address> <account name> <number of replicas> [file name]
 	Note:
-	 - The first parameter (True|False) represente the server cache.
-	If True, then we enable the server cache, else we disable the server cache
-     - The song file represent the path of the 3Go file with all the songs and users
+	<server address>
+		is the address of the Spread server that the client should connect to.
+	<account name> 
+		stands for the name of the account.
+	<number of replicas>
+		is the number of clients that will be initially deployed for <account name>.
+	[file name]
+		is the file that client wll perform batch processing of commands and exit.
+		For the liste of command see Manual part.
 
-• Client.jar: 
-	Usage: $java -jar Client.jar True|False <input file> <output file>
-	Note: The first parameter (True|False) represente the client cache.
-	If True, then we enable the client cache, else we disable the client cache
-	
-• ClientTopTen.jar:
-	Usage: $java -jar ClientTopTen.jar <output file>
+## Manual
 
-• Note: Server need to be launch before client
+• balance
+	This command causes the client to print the current balance on the account.
+• deposit <amount>
+	This command causes the balance to increase by <amount>. This increase should be performed on all the replicas in the group.
+• addinterest <percent>
+	This command causes the balance to increase by <percent> percent of the current value. In other words, the balance should be multiplied by (1 + <percent>/100). This update should be performed on all the replicas in the group.
+• exchange <from> <to>
+	Exchanges the currency from e.g. NOK to USD. Support these currencies only: NOK, USD and EUR. Look at the “Currency table” down below for exchange rates.
+• memberinfo
+	Returns the names of the current participants in the group, and prints it to the screen.
+• sleep <duration>
+	This command causes the client to do nothing for <duration> seconds. It is only useful in a batch file.
+• exit
+	This command causes the client to exit. Alternatively, the client process can be just killed by the means of the operating system.
+
 
 ## The code
 
@@ -51,7 +61,7 @@ The source code is located at "./BESCOND-BERNOUX_code-java".
 
 • JavaSE 1.8 
 • Permission to run script
-• ORBD must be running while executing the script
+• Spread Deamon
 
 ## Help
 
