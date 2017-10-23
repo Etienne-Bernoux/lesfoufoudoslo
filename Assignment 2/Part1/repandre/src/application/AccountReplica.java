@@ -12,6 +12,8 @@ import model.UnknownAction;
 import spread.SpreadException;
 import tools.IOFileParsing;
 
+import static java.lang.System.exit;
+
 public class AccountReplica {
 	
 	
@@ -47,7 +49,7 @@ public class AccountReplica {
 		System.out.println("	This command quit the application and exit every local client.");
 	}
 
-	public static void main(String[] args) throws SpreadException, IOException {
+	public static void main(String[] args) throws IOException {
 
 		if(args.length != 3 && args.length != 4)
 		{
@@ -59,6 +61,7 @@ public class AccountReplica {
 		String accountName = args[1];
 		Integer nbReplicas = new Integer(args[2]);
 		String fileName = args.length == 4 ? args[3] : null;
+		Boolean allRelplicaReady = false;
 		
 		
 		// Creation of the replica and launch each listener
@@ -66,15 +69,35 @@ public class AccountReplica {
 		
 		for(int i = 0; i < nbReplicas; i++)
 		{
-			replicas.add(new Replica(accountName, serverAddr));
+			try {
+				replicas.add(new Replica(accountName, serverAddr));
+			} catch (SpreadException e) {
+				System.out.printf("The %d-th replica has not been created, check the daemon running and config\n",i);
+				exit(1);
+			}
 		}
 
-		
+		// Wait for all replica being ready
+
+		while (!allRelplicaReady){
+			allRelplicaReady = true;
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			for(Replica replica: replicas)
+			{
+				allRelplicaReady = allRelplicaReady && replica.isReady();
+			}
+		}
+
+
 		/**
-		 * 
+		 *
 		 * Put code init client
 		 */
-		
+
 		// Then we print a prompt
 		if(fileName == null)
 		{
@@ -85,7 +108,7 @@ public class AccountReplica {
 			Pattern emptyLine = Pattern.compile("^[ \t]*$");
 			Matcher m = null;
 			FormatCommand fc = null;
-			
+
 			System.out.println("Welcome on our Non-UI bank account. Write \"exit\" to show the command list:");
 
 			while(!quit)
@@ -145,7 +168,7 @@ public class AccountReplica {
 
 			}
 			br.close();
-			
+
 			System.out.println("Ciao!");
 
 		}
@@ -182,13 +205,13 @@ public class AccountReplica {
 			}
 
 		}
-		
+
 		// we stop each thread
 		for(int i = 0; i < nbReplicas; i++)
 		{
 			//TODO
 		}
-		
+
 	}
 
 }
