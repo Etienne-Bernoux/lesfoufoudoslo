@@ -86,7 +86,7 @@ public class FormatCommand {
 		
 	}
 
-	private void performItsOwnMessageOn(Replica replica) throws UnknownAction {
+	private void performItsOwnMessageOn(Replica replica) throws UnknownAction, InvalidFromCurrency {
 		switch (this.getAction())
 		{
 			case "exit":
@@ -124,7 +124,7 @@ public class FormatCommand {
 	}
 	
 	
-	private void performMessageOnFromOtherSender(Replica replica) throws UnknownAction {
+	private void performMessageOnFromOtherSender(Replica replica) throws UnknownAction, InvalidFromCurrency {
 		switch (this.getAction())
 		{
 			case "exit":
@@ -187,14 +187,14 @@ public class FormatCommand {
                 replica.getQueue().add(this);
         }
     }
-    public void performMessageInQueue(Replica replica) throws UnknownAction {
+    public void performMessageInQueue(Replica replica) throws UnknownAction, InvalidFromCurrency {
         if (this.sender.toString().split("#")[1].equals(replica.getConnName())) {
             this.performItsOwnMessageOn(replica);
         } else {
             this.performMessageOnFromOtherSender(replica);
         }
     }
-	public void performActionOnFrom(Replica replica) throws UnknownAction {
+	public void performActionOnFrom(Replica replica) throws UnknownAction, InvalidFromCurrency {
 		if (replica.isReady()) {
             if (this.sender.toString().split("#")[1].equals(replica.getConnName())) {
                 this.performItsOwnMessageOn(replica);
