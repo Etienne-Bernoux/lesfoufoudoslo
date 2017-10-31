@@ -31,6 +31,11 @@ public class Cash {
 
 		this.amount = amount;
 	}
+	
+	public Currency getCurrency()
+	{
+		return this.currency;
+	}
 
 	public void toUSD()
 	{

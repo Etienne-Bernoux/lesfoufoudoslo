@@ -186,7 +186,9 @@ public class AccountReplica {
 				{
 					fc = IOFileParsing.getFormatCommandFromLine(line);
 					try {
-						fc.sendWith(replicas.get(i%nbReplicas));
+						for(Replica r: replicas)
+							fc.sendWith(r);
+						
 					} catch (UnknownAction e) {
 						System.out.println("Unknown action! See help.");
 					}
@@ -207,10 +209,11 @@ public class AccountReplica {
 		}
 
 		// we stop each thread
-		for(int i = 0; i < nbReplicas; i++)
-		{
-			//TODO
-		}
+//		for(int i = 0; i < nbReplicas; i++)
+//		{
+//			//TODO
+//			
+//		}
 
 	}
 

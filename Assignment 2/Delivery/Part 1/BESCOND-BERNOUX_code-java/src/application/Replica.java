@@ -9,6 +9,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import model.*;
+import model.Currency;
 import spread.AdvancedMessageListener;
 import spread.SpreadConnection;
 import spread.SpreadException;
@@ -133,14 +134,14 @@ public class Replica implements Runnable, AdvancedMessageListener  {
 
 	@Override
 	public void regularMessageReceived(SpreadMessage message) {
-//		System.out.println(this.getConnName() + " => New message from " + 
-//		message.getSender() + ": " + new String(message.getData()));
 		FormatCommand fc = IOFileParsing.getFormatCommandFromLine(new String(message.getData()));
 		fc.setSender(message.getSender());
 		try {
 			fc.performActionOnFrom(this);
 		} catch (UnknownAction e) {
 			System.out.println("Action unknown!");
+		} catch (InvalidFromCurrency e) {
+			//System.out.println("Action unvalid (Due to the FROM currency)!");
 		}
 		
 		
@@ -204,7 +205,9 @@ public class Replica implements Runnable, AdvancedMessageListener  {
 		this.cash.addinterest(percentage);
 		
 	}
-	public void exchange(String from, String to) throws UnknownCurrency {
+	public void exchange(String from, String to) throws UnknownCurrency, InvalidFromCurrency {
+		if (!Currency.isEqual(from, this.cash.getCurrency()))
+			throw new InvalidFromCurrency();
         if (to.equals("NOK"))
             this.exchangeNOK();
         else if (to.equals("EUR"))
@@ -310,7 +313,10 @@ public class Replica implements Runnable, AdvancedMessageListener  {
                     this.getQueue().poll().performMessageInQueue(this);
                 } catch (UnknownAction unknownAction) {
                     unknownAction.printStackTrace();
-                }
+                } catch (InvalidFromCurrency e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
             this.state = State.READY;
         }else{
