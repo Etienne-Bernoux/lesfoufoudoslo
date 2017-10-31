@@ -18,12 +18,13 @@ import spread.SpreadMessage;
 import tools.IOFileParsing;
 
 public class Replica implements Runnable, AdvancedMessageListener  {
-	
+
+	private static final int NB_TRY = 10;
 	private String groupName = null;
 	private String serverName = null;
 	private String connName = null;
 	private Integer port = null;
-	private static final int RANGE_NAME = 100;
+	private static final int RANGE_NAME = 1000;
 	private Cash cash = null;
 	private State state = null;
 
@@ -68,10 +69,10 @@ public class Replica implements Runnable, AdvancedMessageListener  {
 	 * @throws SpreadException 
 	 * @throws UnknownHostException 
 	 */
-	public void init() throws UnknownHostException, SpreadException{
+	private void init() throws UnknownHostException, SpreadException {
 		
 		this.connection = new SpreadConnection();
-		this.connection.connect(InetAddress.getByName(this.serverName), this.port.intValue(), this.getConnName(), false, true);
+		this.tryConnect(0); // We try to connect 10 times (overlap naming)
 		SpreadGroup group = new SpreadGroup();
 		group.join(this.connection, this.groupName);
 		// This itself as listener in order to received message while sending messages
@@ -80,6 +81,20 @@ public class Replica implements Runnable, AdvancedMessageListener  {
         ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
         // In 500 mS we will launch an event who we will process all the welcome message received
         executor.schedule(this,500, TimeUnit.MILLISECONDS);
+	}
+	private void tryConnect (int nbTry) throws UnknownHostException, SpreadException {
+
+
+		if( nbTry > Replica.NB_TRY){
+			this.connection.connect(InetAddress.getByName(this.serverName), this.port, this.getConnName(), false, true);
+		}else{
+			try {
+				this.connection.connect(InetAddress.getByName(this.serverName), this.port, this.getConnName(), false, true);
+			} catch (SpreadException e) {
+				this.generateConnectionName();
+				this.tryConnect(++nbTry);
+			}
+		}
 	}
 	
 	/**
