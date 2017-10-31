@@ -134,8 +134,6 @@ public class Replica implements Runnable, AdvancedMessageListener  {
 
 	@Override
 	public void regularMessageReceived(SpreadMessage message) {
-//		System.out.println(this.getConnName() + " => New message from " + 
-//		message.getSender() + ": " + new String(message.getData()));
 		FormatCommand fc = IOFileParsing.getFormatCommandFromLine(new String(message.getData()));
 		fc.setSender(message.getSender());
 		try {
@@ -143,7 +141,7 @@ public class Replica implements Runnable, AdvancedMessageListener  {
 		} catch (UnknownAction e) {
 			System.out.println("Action unknown!");
 		} catch (InvalidFromCurrency e) {
-			System.out.println("Action unvalid (Due to the FROM currency)!");
+			//System.out.println("Action unvalid (Due to the FROM currency)!");
 		}
 		
 		
