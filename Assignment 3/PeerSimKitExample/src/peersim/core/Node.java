@@ -26,7 +26,6 @@ package peersim.core;
  */
 public interface Node extends Fallible, Cloneable
 {
-
 /**
  * Prefix of the parameters that defines protocols.
  * @config

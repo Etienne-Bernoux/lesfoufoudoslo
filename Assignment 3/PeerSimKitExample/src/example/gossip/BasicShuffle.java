@@ -121,13 +121,16 @@ public class BasicShuffle  implements Linkable, EDProtocol, CDProtocol{
 		switch (message.getType()) {
 		// If the message is a shuffle request:
 		case SHUFFLE_REQUEST:
-		//	  1. If Q is waiting for a response from a shuffling initiated in a previous cycle, send back to P a message rejecting the shuffle request; 
+		//	  1. If Q is waiting for a response from a shuffling initiated in a previous cycle, 
+		//			send back to P a message rejecting the shuffle request; 
+			
 		//	  2. Q selects a random subset of size l of its own neighbors; 
 		//	  3. Q reply P's shuffle request by sending back its own subset;
 		//	  4. Q updates its cache to include the neighbors sent by P:
 		//		 - No neighbor appears twice in the cache
 		//		 - Use empty cache slots to add the new entries
-		//		 - If the cache is full, you can replace entries among the ones sent to P with the new ones
+		//		 - If the cache is full, you can replace entries among the ones sent to P with the
+		//				new ones
 			break;
 		
 		// If the message is a shuffle reply:

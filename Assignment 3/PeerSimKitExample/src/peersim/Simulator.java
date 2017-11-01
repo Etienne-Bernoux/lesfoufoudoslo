@@ -149,8 +149,6 @@ public static int getSimID() {
 */
 public static void main(String[] args) throws IOException
 {
-	BufferedReader br = new BufferedReader(new FileReader(args[0]));
-	br.close();
 	long time = System.currentTimeMillis();	
 	
 	System.err.println("Simulator: loading configuration");

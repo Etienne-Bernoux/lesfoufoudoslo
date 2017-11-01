@@ -26,7 +26,6 @@ import peersim.config.*;
 */
 public class GeneralNode implements Node {
 
-
 // ================= fields ========================================
 // =================================================================
 
@@ -186,6 +185,7 @@ public String toString()
 
 /** Implemented as <code>(int)getID()</code>. */
 public int hashCode() { return (int)getID(); }
+
 
 }
 
