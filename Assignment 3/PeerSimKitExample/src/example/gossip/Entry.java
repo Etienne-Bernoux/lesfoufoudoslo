@@ -29,6 +29,8 @@ public class Entry {
 	}
 
 	public boolean equals (Object o) {
+		if(o == null)
+			return false;
 		return ((Entry) o).getNode().getID() == getNode().getID();
 	}
 	

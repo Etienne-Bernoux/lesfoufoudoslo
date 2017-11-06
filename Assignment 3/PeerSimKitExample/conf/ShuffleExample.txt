@@ -3,7 +3,10 @@
 
 SIZE 10000
 
-CYCLE 1000
+#CYCLE 1000
+#CYCLES 300
+
+CYCLE 10
 CYCLES 300
 
 MINDELAY 10
@@ -38,11 +41,11 @@ init.wire WireStar
 
 # This initializes the topology as a ring. Use should also use WireStar to
 # initialize it as a star.
-init.wire WireRingLattice
-{
-	protocol gossip
-	k 1
-}
+##init.wire WireRingLattice
+##{
+##	protocol gossip
+##	k 1
+##}
 
 init.sch CDScheduler
 {
