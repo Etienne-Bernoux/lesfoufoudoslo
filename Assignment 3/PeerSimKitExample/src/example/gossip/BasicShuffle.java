@@ -244,7 +244,9 @@ public class BasicShuffle  implements Linkable, EDProtocol, CDProtocol{
 		Set<Entry> newCache = new HashSet<Entry>();
 		List<Entry> cacheShuffle = this.getShuffleEntryWithout(this.cache.size(), null);
 		for(Entry e: subset)
+		{
 			newCache.add(e);
+		}
 		for(int i = 0; i < cacheShuffle.size() && newCache.size() < this.size; i ++)
 		{
 			newCache.add(cacheShuffle.get(i));

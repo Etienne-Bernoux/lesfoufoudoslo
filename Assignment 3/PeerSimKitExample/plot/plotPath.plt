@@ -7,7 +7,7 @@ set xlabel "cycles"
 set ylabel "Average Path Length (log)"
 set key right top
 set logscale y 
-plot "apRandom30.txt" title 'Random Graph c = 30' with lines, \
-	"ap30.txt" title 'Shuffle c = 30' with lines, \
-	"apRandom50.txt" title 'Random Graph c = 50' with lines, \
-	"ap50.txt" title 'Shuffle c = 50' with lines
+plot "paRandom30.txt" title 'Random Graph c = 30' with lines, \
+	"pa30.txt" title 'Shuffle c = 30' with lines, \
+	"paRandom50.txt" title 'Random Graph c = 50' with lines, \
+	"pa50.txt" title 'Shuffle c = 50' with lines

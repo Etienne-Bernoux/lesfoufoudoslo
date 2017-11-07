@@ -52,6 +52,52 @@ public class ParseFile {
 			}
         }
     }
+	
+	
+	static void modifyFileInDegree(String pathSrc, String pathDst)
+    {
+        File fileToBeModified = new File(pathSrc);
+        BufferedReader reader = null;
+        FileWriter writer = null;
+        
+        Pattern pattern = Pattern.compile("^([0-9]+)$");
+         
+        try
+        {
+            writer = new FileWriter(pathDst);
+        	reader = new BufferedReader(new FileReader(fileToBeModified));
+            //Reading all the lines of input text file into oldContent
+            String line = reader.readLine();
+            while (line != null) 
+            {
+            	Matcher matcher = pattern.matcher(line);
+            	if(matcher.find())
+            	{
+                    writer.write(matcher.group(1)+"\n");
+            	}
+                line = reader.readLine();
+            }  
+        }
+        catch (IOException e)
+        {
+        	System.out.println("Erreur with file: " + pathSrc);
+        }
+        finally
+        {
+			try
+			{
+				//Closing the resources
+				reader.close();
+				writer.close();
+			} 
+			catch (Exception e) 
+			{
+//	        	System.out.println("Erreur with file: " + pathSrc);
+			}
+        }
+    }
+	
+	
 	public static void main(String[] argv)
 	{
 		ParseFile.modifyFile("./out/pa30.txt", "./plot/pa30.txt");
@@ -65,7 +111,11 @@ public class ParseFile {
 		ParseFile.modifyFile("./out/ccRandom30.txt", "./plot/ccRandom30.txt");
 		ParseFile.modifyFile("./out/ccRandom50.txt", "./plot/ccRandom50.txt");
 		
-
+		ParseFile.modifyFileInDegree("./out/dd30.txt", "./plot/dd30.txt");
+		ParseFile.modifyFileInDegree("./out/dd50.txt", "./plot/dd50.txt");
+		ParseFile.modifyFileInDegree("./out/ddRandom30.txt", "./plot/ddRandom30.txt");
+		ParseFile.modifyFileInDegree("./out/ddRandom50.txt", "./plot/ddRandom50.txt");
 		
+		System.out.println("It's done Dude!");
 	}
 }
