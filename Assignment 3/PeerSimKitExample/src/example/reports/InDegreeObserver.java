@@ -78,12 +78,14 @@ public class InDegreeObserver implements Control
 		}
 		
 		// Sort the distribution and print the result
+		// System.out.println(dist);
+		dist.remove(null);
 		SortedSet<Integer> sortedKeys = new TreeSet<Integer>(dist.keySet());
 		for(int i = 0; i <= sortedKeys.last(); i++){
 			if(sortedKeys.contains(i))
-				System.out.println(dist.get(i));
+				System.out.println(i + " " + dist.get(i));
 			else
-				System.out.println(0);
+				System.out.println(i + " " + 0);
 		}
 
 		return false;
