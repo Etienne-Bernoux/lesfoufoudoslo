@@ -111,10 +111,10 @@ public class ParseFile {
 		ParseFile.modifyFile("./out/ccRandom30.txt", "./plot/ccRandom30.txt");
 		ParseFile.modifyFile("./out/ccRandom50.txt", "./plot/ccRandom50.txt");
 		
-		ParseFile.modifyFileInDegree("./out/dd30.txt", "./plot/dd30.txt");
-		ParseFile.modifyFileInDegree("./out/dd50.txt", "./plot/dd50.txt");
-		ParseFile.modifyFileInDegree("./out/ddRandom30.txt", "./plot/ddRandom30.txt");
-		ParseFile.modifyFileInDegree("./out/ddRandom50.txt", "./plot/ddRandom50.txt");
+		ParseFile.modifyFileInDegree("./out/id30.txt", "./plot/id30.txt");
+		ParseFile.modifyFileInDegree("./out/id50.txt", "./plot/id50.txt");
+		ParseFile.modifyFileInDegree("./out/idRandom30.txt", "./plot/idRandom30.txt");
+		ParseFile.modifyFileInDegree("./out/idRandom50.txt", "./plot/idRandom50.txt");
 		
 		System.out.println("It's done Dude!");
 	}
