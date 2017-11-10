@@ -221,7 +221,7 @@ public class BasicShuffle  implements Linkable, EDProtocol, CDProtocol{
 		{
 			indexes.add(i, i);
 		}
-		Collections.shuffle(indexes, new Random(1234567890));
+		Collections.shuffle(indexes);
 		boolean inside = false;
 		int upto = Integer.min(nbEntry, this.cache.size());
 		for(int i = 0; i < upto; i ++)
