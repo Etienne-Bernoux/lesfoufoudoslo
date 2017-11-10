@@ -65,7 +65,7 @@ public class InDegreeObserver implements Control
 
 		// Map of the in-degree distribution. The key is the in-degree and the
 		// entry is the number of nodes having this distribution
-		Map<Integer, Integer> dist = new HashMap<>();
+		Map<Integer, Integer> dist = new HashMap<Integer, Integer>();
 
 		// Fill the map with the in-degree distribution of each node
 		for (int i = 0; i < Network.size(); i++){
@@ -78,12 +78,14 @@ public class InDegreeObserver implements Control
 		}
 		
 		// Sort the distribution and print the result
-		SortedSet<Integer> sortedKeys = new TreeSet<>(dist.keySet());
+		// System.out.println(dist);
+		dist.remove(null);
+		SortedSet<Integer> sortedKeys = new TreeSet<Integer>(dist.keySet());
 		for(int i = 0; i <= sortedKeys.last(); i++){
 			if(sortedKeys.contains(i))
-				System.out.println(dist.get(i));
+				System.out.println(i + " " + dist.get(i));
 			else
-				System.out.println(0);
+				System.out.println(i + " " + 0);
 		}
 
 		return false;
