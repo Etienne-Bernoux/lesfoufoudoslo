@@ -14,602 +14,601 @@ EDSimulator: loaded controls [control.graphPL]
 Current time: 0
 control.graphPL: 1.8999099909991
 Current time: 1000
-control.graphPL: 1.8986998699869988
+control.graphPL: 1.8986498649864987
 Current time: 2000
-control.graphPL: 1.8974397439743975
+control.graphPL: 1.8983998399839983
 Current time: 3000
-control.graphPL: 1.8986898689868987
+control.graphPL: 1.8982698269826983
 Current time: 4000
-control.graphPL: 1.903900390039004
-control.graphPL: Current time: 5000
+control.graphPL: 1.899059905990599
+Current time: 5000
+control.graphPL: 1.9001800180018003
 Current time: 6000
+control.graphPL: 1.9033303330333033
 Current time: 7000
+control.graphPL: 1.9082608260826082
 Current time: 8000
+control.graphPL: 1.9135513551355134
 Current time: 9000
-Current time: 10000
+control.graphPL: 1.9188118811881187
+control.graphPL: Current time: 10000
+1.9257125712571257
 Current time: 11000
+control.graphPL: 1.9361136113611361
 Current time: 12000
+control.graphPL: 1.9455845584558455
 Current time: 13000
-1.9116511651165116
-control.graphPL: 1.9172917291729172
-control.graphPL: 1.925912591259126
-control.graphPL: 1.9335733573357337
-control.graphPL: 2.0814081408140814
-control.graphPL: 2.0817781778177817
-control.graphPL: 2.007290729072907
-control.graphPL: 2.0123512351235124
-control.graphPL: 2.029012901290129
-control.graphPL: 2.031193119311931
-control.graphPL: 2.044024402440244
-control.graphPL: 2.1163716371637165
-control.graphPL: 2.0542454245424544
-control.graphPL: 2.0634363436343635
-control.graphPL: 2.1374537453745375
-control.graphPL: 2.0857185718571856
-control.graphPL: 2.092969296929693
-control.graphPL: Current time: 14000
+control.graphPL: 1.9574457445744575
+Current time: 14000
+control.graphPL: 1.9690969096909692
 Current time: 15000
+control.graphPL: 2.0652665266526653
 Current time: 16000
+control.graphPL: 2.0776077607760777
 Current time: 17000
+control.graphPL: 2.0923992399239926
 Current time: 18000
+control.graphPL: 2.1907990799079906
 Current time: 19000
+control.graphPL: 2.281978197819782
 Current time: 20000
+control.graphPL: 2.292319231923192
 Current time: 21000
+control.graphPL: 2.380698069806981
 Current time: 22000
-2.0406440644064405
-control.graphPL: 2.0497849784978497
-control.graphPL: 2.1764476447644765
-control.graphPL: 2.304930493049305
-control.graphPL: 2.1913091309130914
-control.graphPL: 2.305040504050405
-control.graphPL: 2.314871487148715
-control.graphPL: 2.3249024902490247
-control.graphPL: 2.2235223522352237
-control.graphPL: 2.2824082408240822
-control.graphPL: 2.295839583958396
-control.graphPL: 2.295049504950495
-control.graphPL: 2.3501650165016503
-control.graphPL: 2.314971497149715
-control.graphPL: 2.3184418441844183
-control.graphPL: 2.284128412841284
-control.graphPL: 2.3378537853785377
-control.graphPL: Current time: 23000
+control.graphPL: 2.463046304630463
+Current time: 23000
+control.graphPL: 2.4684168416841685
 Current time: 24000
+control.graphPL: 2.548264826482648
 Current time: 25000
+control.graphPL: 2.5542354235423543
 Current time: 26000
+control.graphPL: 2.5561556155615563
 Current time: 27000
+control.graphPL: 2.5562056205620562
 Current time: 28000
+control.graphPL: 2.560836083608361
 Current time: 29000
+control.graphPL: 2.5661266126612663
 Current time: 30000
+control.graphPL: 2.6273227322732273
 Current time: 31000
-Current time: 32000
+control.graphPL: 2.628122812281228
+control.graphPL: Current time: 32000
+2.6293929392939295
 Current time: 33000
+control.graphPL: 2.577107710771077
 Current time: 34000
+control.graphPL: 2.5289128912891288
 Current time: 35000
+control.graphPL: 2.5332833283328333
 Current time: 36000
+control.graphPL: 2.532763276327633
 Current time: 37000
+control.graphPL: 2.4873887388738876
 Current time: 38000
+control.graphPL: 2.4887688768876886
 Current time: 39000
+control.graphPL: 2.4885388538853888
 Current time: 40000
+control.graphPL: 2.492909290929093
 Current time: 41000
+control.graphPL: 2.5292429242924293
 Current time: 42000
+control.graphPL: 2.532693269326933
 Current time: 43000
-Current time: 44000
+control.graphPL: 2.532983298329833
+control.graphPL: Current time: 44000
+2.5335333533353337
 Current time: 45000
+control.graphPL: 2.5335633563356335
 Current time: 46000
+control.graphPL: 2.5344034403440343
 Current time: 47000
+control.graphPL: 2.536863686368637
 Current time: 48000
-2.3007100710071007
-control.graphPL: 2.272167216721672
-control.graphPL: 2.3515451545154518
-control.graphPL: 2.347654765476548
-control.graphPL: 2.4361436143614363
-control.graphPL: 2.4334133413341332
-control.graphPL: 2.4513451345134514
-control.graphPL: 2.3978597859785977
-control.graphPL: 2.43006300630063
-control.graphPL: 2.4706670667066706
+control.graphPL: 2.5387238723872385
 Current time: 49000
-control.graphPL: 2.4443844384438442
-control.graphPL: 2.5057705770577057
-control.graphPL: 2.485928592859286
-control.graphPL: 2.563816381638164
-control.graphPL: Current time: 50000
-Current time: 51000
-Current time: 52000
+control.graphPL: 2.5755575557555757
+Current time: 50000
+control.graphPL: 2.5756275627562757
+control.graphPL: Current time: 51000
+2.574147414741474
+control.graphPL: Current time: 52000
+2.576287628762876
 Current time: 53000
-2.516061606160616
-control.graphPL: 2.5065306530653064
-control.graphPL: 2.5065606560656066
-control.graphPL: 2.51003100310031
-control.graphPL: 2.5216021602160215
-control.graphPL: 2.5444044404440445
-control.graphPL: 2.524122412241224
-control.graphPL: Current time: 54000
+control.graphPL: 2.5773577357735773
+Current time: 54000
+control.graphPL: 2.598989898989899
 Current time: 55000
+control.graphPL: 2.6291829182918294
 Current time: 56000
+control.graphPL: 2.572057205720572
 Current time: 57000
+control.graphPL: 2.6012401240124015
 Current time: 58000
+control.graphPL: 2.626162616261626
 Current time: 59000
+control.graphPL: 2.6225122512251224
 Current time: 60000
-2.5014401440144014
+control.graphPL: 2.6193219321932193
 Current time: 61000
-control.graphPL: 2.5178017801780177
+control.graphPL: 2.6154815481548153
 Current time: 62000
-control.graphPL: 2.544724472447245
-control.graphPL: Current time: 63000
-2.5690969096909693
+control.graphPL: 2.6013501350135013
+Current time: 63000
+control.graphPL: 2.5988298829882988
 Current time: 64000
-control.graphPL: 2.5494449444944496
-control.graphPL: Current time: 65000
-2.5146814681468146
+control.graphPL: 2.594069406940694
+Current time: 65000
+control.graphPL: 2.5901090109010902
 Current time: 66000
-control.graphPL: 2.562336233623362
-control.graphPL: Current time: 67000
-2.5712771277127713
-control.graphPL: Current time: 68000
-2.5536553655365535
-control.graphPL: Current time: 69000
-2.5703570357035703
+control.graphPL: 2.5895489548954895
+Current time: 67000
+control.graphPL: 2.5894789478947895
+Current time: 68000
+control.graphPL: 2.591039103910391
+Current time: 69000
+control.graphPL: 2.5888288828882886
 Current time: 70000
-control.graphPL: 2.5465846584658465
+control.graphPL: 2.601060106010601
 Current time: 71000
-control.graphPL: 2.5562856285628563
+control.graphPL: 2.6037003700370036
 Current time: 72000
-control.graphPL: 2.55031503150315
+control.graphPL: 2.6002400240024004
 Current time: 73000
-control.graphPL: 2.5738373837383737
-control.graphPL: Current time: 74000
-2.5625162516251625
+control.graphPL: 2.599899989999
+Current time: 74000
+control.graphPL: 2.598869886988699
 Current time: 75000
-control.graphPL: 2.5448144814481446
+control.graphPL: 2.5998799879987997
 Current time: 76000
-control.graphPL: 2.5637363736373637
-control.graphPL: Current time: 77000
-2.5547454745474547
+control.graphPL: 2.6033503350335034
+Current time: 77000
+control.graphPL: 2.6018601860186017
 Current time: 78000
-control.graphPL: 2.539013901390139
-control.graphPL: Current time: 79000
-2.55978597859786
+control.graphPL: 2.6022802280228023
+Current time: 79000
+control.graphPL: 2.5994399439943994
 Current time: 80000
-control.graphPL: 2.5502550255025502
-control.graphPL: Current time: 81000
-2.5484648464846487
+control.graphPL: 2.6134013401340135
+Current time: 81000
+control.graphPL: 2.6146614661466145
 Current time: 82000
-control.graphPL: 2.5407440744074408
-control.graphPL: Current time: 83000
-2.5714771477147713
-control.graphPL: Current time: 84000
-2.576697669766977
-control.graphPL: Current time: 85000
-2.568706870687069
-control.graphPL: Current time: 86000
-2.573967396739674
+control.graphPL: 2.6121812181218123
+Current time: 83000
+control.graphPL: 2.60994099409941
+Current time: 84000
+control.graphPL: 2.608820882088209
+Current time: 85000
+control.graphPL: 2.5914091409140916
+Current time: 86000
+control.graphPL: 2.59020902090209
 Current time: 87000
-control.graphPL: 2.567776777677768
-control.graphPL: Current time: 88000
-2.548034803480348
-control.graphPL: 2.5700870087008703
-control.graphPL: 2.558925892589259
-control.graphPL: 2.553845384538454
-control.graphPL: 2.5725972597259728
-control.graphPL: 2.5576157615761574
-control.graphPL: 2.55031503150315
-control.graphPL: 2.5574457445744576
-control.graphPL: 2.5504550455045503
-control.graphPL: 2.567296729672967
-control.graphPL: 2.565726572657266
-control.graphPL: 2.557305730573057
+control.graphPL: 2.6000500050005
+Current time: 88000
+control.graphPL: 2.600860086008601
 Current time: 89000
+control.graphPL: 2.597789778977898
 Current time: 90000
+control.graphPL: 2.598799879987999
 Current time: 91000
+control.graphPL: 2.595049504950495
 Current time: 92000
+control.graphPL: 2.5855985598559856
 Current time: 93000
-Current time: 94000
+control.graphPL: 2.5867186718671866
+control.graphPL: Current time: 94000
+2.58979897989799
 Current time: 95000
+control.graphPL: 2.58988898889889
 Current time: 96000
+control.graphPL: 2.5925492549254927
 Current time: 97000
+control.graphPL: 2.5923092309230924
 Current time: 98000
+control.graphPL: 2.6051905190519054
 Current time: 99000
+control.graphPL: 2.603020302030203
 Current time: 100000
-control.graphPL: Current time: 101000
+control.graphPL: 2.599149914991499
+Current time: 101000
+control.graphPL: 2.6045404540454045
 Current time: 102000
+control.graphPL: 2.601890189018902
 Current time: 103000
+control.graphPL: 2.603000300030003
 Current time: 104000
+control.graphPL: 2.6005600560056004
 Current time: 105000
+control.graphPL: 2.6002500250025005
 Current time: 106000
+control.graphPL: 2.599219921992199
 Current time: 107000
+control.graphPL: 2.6018001800180017
 Current time: 108000
-2.563056305630563
-control.graphPL: 2.5305330533053305
-control.graphPL: 2.5485448544854488
-control.graphPL: 2.552915291529153
-control.graphPL: 2.559035903590359
-control.graphPL: 2.5684768476847686
-control.graphPL: 2.5713471347134713
-control.graphPL: 2.5755875587558754
-control.graphPL: 2.580938093809381
+control.graphPL: 2.6026202620262024
 Current time: 109000
-control.graphPL: 2.5844184418441842
-control.graphPL: Current time: 110000
-2.5966996699669966
-control.graphPL: Current time: 111000
-2.590939093909391
-Current time: 112000
-control.graphPL: 2.583018301830183
-control.graphPL: Current time: 113000
-2.5872187218721874
-Current time: 114000
-control.graphPL: 2.5887588758875886
-Current time: 115000
-control.graphPL: 2.585928592859286
-control.graphPL: Current time: 116000
-2.582938293829383
-Current time: 117000
-control.graphPL: 2.574927492749275
-control.graphPL: Current time: 118000
-2.5866286628662865
-Current time: 119000
-control.graphPL: 2.5946494649464946
-control.graphPL: Current time: 120000
-2.597029702970297
-Current time: 121000
-control.graphPL: 2.599039903990399
-Current time: 122000
-control.graphPL: 2.5933793379337935
-control.graphPL: Current time: 123000
-2.5997199719971995
-control.graphPL: Current time: 124000
-2.5955295529552957
-control.graphPL: Current time: 125000
-2.605060506050605
-Current time: 126000
+control.graphPL: 2.5997699769977
+Current time: 110000
 control.graphPL: 2.604160416041604
-control.graphPL: Current time: 127000
-2.5855585558555854
-control.graphPL: Current time: 128000
-2.5926892689268928
-control.graphPL: Current time: 129000
-2.5956995699569956
+Current time: 111000
+control.graphPL: 2.608840884088409
+Current time: 112000
+control.graphPL: 2.6094709470947093
+Current time: 113000
+control.graphPL: 2.605300530053005
+Current time: 114000
+control.graphPL: 2.6067306730673065
+Current time: 115000
+control.graphPL: 2.606960696069607
+Current time: 116000
+control.graphPL: 2.603080308030803
+Current time: 117000
+control.graphPL: 2.605030503050305
+Current time: 118000
+control.graphPL: 2.6046404640464047
+Current time: 119000
+control.graphPL: 2.604930493049305
+Current time: 120000
+control.graphPL: 2.607110711071107
+Current time: 121000
+control.graphPL: 2.605290529052905
+Current time: 122000
+control.graphPL: 2.606920692069207
+Current time: 123000
+control.graphPL: 2.6081608160816083
+Current time: 124000
+control.graphPL: 2.6104410441044106
+Current time: 125000
+control.graphPL: 2.608120812081208
+Current time: 126000
+control.graphPL: 2.6094609460946097
+Current time: 127000
+control.graphPL: 2.610831083108311
+Current time: 128000
+control.graphPL: 2.6095509550955094
+Current time: 129000
+control.graphPL: 2.607080708070807
 Current time: 130000
-control.graphPL: 2.58995899589959
-control.graphPL: Current time: 131000
-2.599129912991299
-control.graphPL: Current time: 132000
-2.5923992399239926
+control.graphPL: 2.6048304830483047
+Current time: 131000
+control.graphPL: 2.6063906390639064
+Current time: 132000
+control.graphPL: 2.6033503350335034
 Current time: 133000
-control.graphPL: 2.591979197919792
+control.graphPL: 2.6037703770377036
 Current time: 134000
-control.graphPL: 2.5962596259625963
+control.graphPL: 2.6045704570457047
 Current time: 135000
-control.graphPL: 2.594189418941894
-control.graphPL: Current time: 136000
-2.594389438943894
+control.graphPL: 2.6054105410541055
+Current time: 136000
+control.graphPL: 2.6067506750675067
 Current time: 137000
-control.graphPL: 2.5999499949994997
-control.graphPL: Current time: 138000
-2.5913091309130913
-control.graphPL: Current time: 139000
-2.594989498949895
-control.graphPL: Current time: 140000
-2.592189218921892
+control.graphPL: 2.6045404540454045
+Current time: 138000
+control.graphPL: 2.6024502450245026
+Current time: 139000
+control.graphPL: 2.602100210021002
+Current time: 140000
+control.graphPL: 2.6016401640164015
 Current time: 141000
-control.graphPL: 2.5937193719371936
+control.graphPL: 2.6041904190419043
 Current time: 142000
-control.graphPL: 2.5934793479347933
+control.graphPL: 2.6051105110511052
 Current time: 143000
-control.graphPL: 2.5818281828182816
-control.graphPL: Current time: 144000
-2.58009800980098
-control.graphPL: Current time: 145000
-2.587018701870187
-control.graphPL: Current time: 146000
-2.594319431943194
+control.graphPL: 2.605080508050805
+Current time: 144000
+control.graphPL: 2.6025502550255024
+Current time: 145000
+control.graphPL: 2.6023302330233022
+Current time: 146000
+control.graphPL: 2.601940194019402
 Current time: 147000
-control.graphPL: 2.6066606660666065
+control.graphPL: 2.602760276027603
 Current time: 148000
-control.graphPL: 2.6102810281028104
+control.graphPL: 2.6003500350035003
 Current time: 149000
-control.graphPL: 2.6082308230823084
+control.graphPL: 2.597879787978798
 Current time: 150000
-control.graphPL: 2.6054005400540055
-control.graphPL: Current time: 151000
-2.612301230123012
-control.graphPL: Current time: 152000
-2.6157415741574157
+control.graphPL: 2.598219821982198
+Current time: 151000
+control.graphPL: 2.5977597759775977
+Current time: 152000
+control.graphPL: 2.596789678967897
 Current time: 153000
-control.graphPL: 2.626052605260526
-control.graphPL: Current time: 154000
-2.619221922192219
-control.graphPL: Current time: 155000
-2.618071807180718
-control.graphPL: Current time: 156000
-2.6230823082308232
-control.graphPL: Current time: 157000
+control.graphPL: 2.598219821982198
+Current time: 154000
+control.graphPL: 2.599279927992799
+Current time: 155000
+control.graphPL: 2.600200020002
+Current time: 156000
+control.graphPL: 2.601140114011401
+Current time: 157000
+control.graphPL: 2.6016601660166017
 Current time: 158000
+control.graphPL: 2.602120212021202
 Current time: 159000
+control.graphPL: 2.601820182018202
 Current time: 160000
+control.graphPL: 2.604860486048605
 Current time: 161000
+control.graphPL: 2.605790579057906
 Current time: 162000
+control.graphPL: 2.6036903690369035
 Current time: 163000
+control.graphPL: 2.6032903290329035
 Current time: 164000
-2.6243024302430245
-control.graphPL: 2.6268326832683266
-control.graphPL: 2.623032303230323
-control.graphPL: 2.632063206320632
-control.graphPL: 2.6266526652665267
-control.graphPL: 2.6183518351835184
-control.graphPL: 2.613981398139814
-control.graphPL: 2.6191919191919193
-control.graphPL: Current time: 165000
-2.613771377137714
-control.graphPL: 2.6185118511851186
-control.graphPL: 2.611661166116612
-control.graphPL: 2.6181318131813183
-control.graphPL: 2.633793379337934
-control.graphPL: 2.6155715571557154
-control.graphPL: Current time: 166000
+control.graphPL: 2.605210521052105
+Current time: 165000
+control.graphPL: 2.605000500050005
+Current time: 166000
+control.graphPL: 2.607030703070307
 Current time: 167000
+control.graphPL: 2.613161316131613
 Current time: 168000
+control.graphPL: 2.609320932093209
 Current time: 169000
+control.graphPL: 2.6124012401240124
 Current time: 170000
+control.graphPL: 2.611951195119512
 Current time: 171000
+control.graphPL: 2.6115111511151117
 Current time: 172000
+control.graphPL: 2.607900790079008
 Current time: 173000
+control.graphPL: 2.6087108710871085
 Current time: 174000
-2.609120912091209
-control.graphPL: 2.609130913091309
-control.graphPL: 2.607860786078608
-control.graphPL: 2.6127612761276127
-control.graphPL: 2.605150515051505
-control.graphPL: 2.6052705270527055
-control.graphPL: 2.6073507350735072
-control.graphPL: 2.613101310131013
-control.graphPL: 2.615911591159116
-control.graphPL: Current time: 175000
+control.graphPL: 2.607710771077108
+Current time: 175000
+control.graphPL: 2.615001500150015
 Current time: 176000
+control.graphPL: 2.6154415441544154
 Current time: 177000
+control.graphPL: 2.6113411341134114
 Current time: 178000
+control.graphPL: 2.609180918091809
 Current time: 179000
+control.graphPL: 2.6097109710971096
 Current time: 180000
-2.6175817581758176
-control.graphPL: Current time: 181000
-2.622002200220022
-control.graphPL: Current time: 182000
-2.626232623262326
-control.graphPL: Current time: 183000
-2.6302430243024304
-control.graphPL: Current time: 184000
-2.63001300130013
+control.graphPL: 2.60998099809981
+Current time: 181000
+control.graphPL: 2.609090909090909
+Current time: 182000
+control.graphPL: 2.606220622062206
+Current time: 183000
+control.graphPL: 2.6034403440344036
+Current time: 184000
+control.graphPL: 2.608180818081808
 Current time: 185000
-control.graphPL: 2.6365636563656367
-control.graphPL: 2.6445344534453445
+control.graphPL: 2.6062406240624063
 Current time: 186000
+control.graphPL: 2.605870587058706
 Current time: 187000
+control.graphPL: 2.6036303630363036
 Current time: 188000
+control.graphPL: 2.603940394039404
 Current time: 189000
+control.graphPL: 2.6024302430243025
 Current time: 190000
-Current time: 191000
+control.graphPL: 2.602120212021202
+control.graphPL: Current time: 191000
+2.602960296029603
 Current time: 192000
+control.graphPL: 2.6037203720372037
 Current time: 193000
-control.graphPL: 2.6403940394039402
-control.graphPL: 2.637083708370837
-control.graphPL: 2.6385138513851385
-control.graphPL: 2.651855185518552
-control.graphPL: 2.6492149214921494
-control.graphPL: 2.6374837483748377
-control.graphPL: 2.6363936393639364
+control.graphPL: 2.606980698069807
 Current time: 194000
-control.graphPL: 2.6424842484248425
+control.graphPL: 2.603110311031103
 Current time: 195000
-control.graphPL: 2.656305630563056
+control.graphPL: 2.6052705270527055
 Current time: 196000
-control.graphPL: 2.6643964396439643
-control.graphPL: Current time: 197000
-2.6611561156115613
+control.graphPL: 2.6095909590959097
+Current time: 197000
+control.graphPL: 2.6104710471047103
 Current time: 198000
-control.graphPL: 2.6704170417041704
-control.graphPL: Current time: 199000
-2.674077407740774
-control.graphPL: 2.6728272827282726
-control.graphPL: 2.6715571557155715
-control.graphPL: 2.6714571457145713
-control.graphPL: 2.6722872287228725
-control.graphPL: 2.6625162516251626
-control.graphPL: 2.6566556655665567
-control.graphPL: 2.653195319531953
-control.graphPL: 2.648254825482548
-control.graphPL: 2.6503750375037503
-control.graphPL: 2.63990399039904
-control.graphPL: 2.645124512451245
-control.graphPL: 2.6486448644864486
-control.graphPL: 2.645964596459646
-control.graphPL: 2.654875487548755
-control.graphPL: 2.652275227522752
-control.graphPL: 2.6675267526752675
-control.graphPL: 2.6663266326632664
-control.graphPL: 2.6707170717071707
-control.graphPL: 2.66981698169817
-control.graphPL: 2.6645764576457647
-control.graphPL: 2.6630663066306632
-control.graphPL: 2.6587358735873585
-control.graphPL: 2.6615961596159616
+control.graphPL: 2.6122712271227124
+Current time: 199000
+control.graphPL: 2.6092809280928093
 Current time: 200000
+control.graphPL: 2.6084908490849084
 Current time: 201000
+control.graphPL: 2.6074707470747076
 Current time: 202000
+control.graphPL: 2.6092909290929094
 Current time: 203000
+control.graphPL: 2.608690869086909
 Current time: 204000
+control.graphPL: 2.613151315131513
 Current time: 205000
+control.graphPL: 2.6113211321132113
 Current time: 206000
+control.graphPL: 2.6112811281128114
 Current time: 207000
+control.graphPL: 2.616121612161216
 Current time: 208000
+control.graphPL: 2.6092209220922093
 Current time: 209000
+control.graphPL: 2.6052705270527055
 Current time: 210000
+control.graphPL: 2.601820182018202
 Current time: 211000
+control.graphPL: 2.6032903290329035
 Current time: 212000
+control.graphPL: 2.606790679067907
 Current time: 213000
+control.graphPL: 2.6077407740774077
 Current time: 214000
+control.graphPL: 2.6074307430743073
 Current time: 215000
+control.graphPL: 2.6054405440544053
 Current time: 216000
-Current time: 217000
+control.graphPL: 2.603180318031803
+control.graphPL: Current time: 217000
+2.599139913991399
 Current time: 218000
+control.graphPL: 2.599049904990499
 Current time: 219000
+control.graphPL: 2.6053705370537052
 Current time: 220000
+control.graphPL: 2.606200620062006
 Current time: 221000
+control.graphPL: 2.6065106510651064
 Current time: 222000
+control.graphPL: 2.6074807480748077
 Current time: 223000
-Current time: 224000
+control.graphPL: 2.607900790079008
+control.graphPL: Current time: 224000
+2.6046004600460044
 Current time: 225000
+control.graphPL: 2.6113411341134114
 Current time: 226000
+control.graphPL: 2.611051105110511
 Current time: 227000
+control.graphPL: 2.611241124112411
 Current time: 228000
+control.graphPL: 2.6096709670967098
 Current time: 229000
+control.graphPL: 2.61010101010101
 Current time: 230000
-control.graphPL: 2.675067506750675
-control.graphPL: 2.673977397739774
-control.graphPL: 2.672817281728173
-control.graphPL: 2.6806480648064808
-control.graphPL: 2.6852085208520853
-control.graphPL: 2.685758575857586
-control.graphPL: 2.686098609860986
-control.graphPL: Current time: 231000
+control.graphPL: 2.6125112511251127
+Current time: 231000
+control.graphPL: 2.610891089108911
 Current time: 232000
+control.graphPL: 2.609330933093309
 Current time: 233000
-2.6879087908790877
+control.graphPL: 2.608340834083408
 Current time: 234000
-control.graphPL: 2.6918091809180917
+control.graphPL: 2.6085508550855088
 Current time: 235000
-control.graphPL: 2.695229522952295
-Current time: 236000
-control.graphPL: 2.7029802980298028
+control.graphPL: 2.607010701070107
+control.graphPL: Current time: 236000
+2.6075307530753076
 Current time: 237000
-control.graphPL: 2.701010101010101
+control.graphPL: 2.607630763076308
 Current time: 238000
-control.graphPL: 2.692089208920892
+control.graphPL: 2.610821082108211
 Current time: 239000
-control.graphPL: 2.693009300930093
+control.graphPL: 2.613081308130813
 Current time: 240000
-control.graphPL: 2.6954995499549956
+control.graphPL: 2.608690869086909
 Current time: 241000
-control.graphPL: 2.695919591959196
+control.graphPL: 2.60989098909891
 Current time: 242000
-control.graphPL: 2.6834383438343834
-control.graphPL: 2.686058605860586
-control.graphPL: 2.698699869986999
-control.graphPL: 2.6977597759775978
+control.graphPL: 2.607840784078408
 Current time: 243000
-control.graphPL: 2.692749274927493
-control.graphPL: Current time: 244000
-2.6937793779377937
-control.graphPL: Current time: 245000
-2.694009400940094
-control.graphPL: Current time: 246000
-2.685248524852485
+control.graphPL: 2.6084908490849084
+Current time: 244000
+control.graphPL: 2.6097309730973097
+Current time: 245000
+control.graphPL: 2.608970897089709
+Current time: 246000
+control.graphPL: 2.60982098209821
 Current time: 247000
-control.graphPL: 2.6827982798279826
-control.graphPL: Current time: 248000
-2.6896589658965895
+control.graphPL: 2.616851685168517
+Current time: 248000
+control.graphPL: 2.612991299129913
 control.graphPL: Current time: 249000
-2.6953195319531953
+2.6133813381338133
 Current time: 250000
+control.graphPL: 2.617891789178918
 Current time: 251000
+control.graphPL: 2.617911791179118
 Current time: 252000
+control.graphPL: 2.614901490149015
 Current time: 253000
+control.graphPL: 2.615051505150515
 Current time: 254000
+control.graphPL: 2.6107010701070106
 Current time: 255000
+control.graphPL: 2.6151715171517154
 Current time: 256000
+control.graphPL: 2.6144814481448146
 Current time: 257000
+control.graphPL: 2.614351435143514
 Current time: 258000
+control.graphPL: 2.615031503150315
 Current time: 259000
+control.graphPL: 2.6142414241424143
 Current time: 260000
+control.graphPL: 2.614011401140114
 Current time: 261000
+control.graphPL: 2.6164716471647163
 Current time: 262000
+control.graphPL: 2.617981798179818
 Current time: 263000
-control.graphPL: 2.6853085308530855
+control.graphPL: 2.6192719271927194
 Current time: 264000
-control.graphPL: 2.6904490449044904
+control.graphPL: 2.6194519451945193
 Current time: 265000
-control.graphPL: 2.6943294329432943
+control.graphPL: 2.6223022302230223
 Current time: 266000
-control.graphPL: 2.6854285428542854
-control.graphPL: 2.688888888888889
-control.graphPL: 2.6985398539853986
-control.graphPL: 2.696159615961596
-control.graphPL: 2.682898289828983
-control.graphPL: 2.686798679867987
-control.graphPL: 2.6935993599359938
-control.graphPL: 2.695159515951595
-control.graphPL: 2.6955195519551953
-control.graphPL: 2.705900590059006
-control.graphPL: 2.7005400540054008
-control.graphPL: 2.698699869986999
-control.graphPL: 2.696919691969197
-control.graphPL: 2.69006900690069
-control.graphPL: Current time: 267000
-2.6867086708670866
+control.graphPL: 2.622262226222622
+Current time: 267000
+control.graphPL: 2.6176017601760178
 Current time: 268000
-control.graphPL: 2.6735273527352734
+control.graphPL: 2.62004200420042
 Current time: 269000
-control.graphPL: 2.681788178817882
-control.graphPL: Current time: 270000
-2.676327632763276
+control.graphPL: 2.6199019901990197
+Current time: 270000
+control.graphPL: 2.6235623562356234
 Current time: 271000
-control.graphPL: 2.6817381738173816
-control.graphPL: Current time: 272000
-2.6738973897389737
+control.graphPL: 2.6254525452545256
+Current time: 272000
+control.graphPL: 2.625812581258126
 control.graphPL: Current time: 273000
-2.6735873587358734
-control.graphPL: Current time: 274000
+2.6254025402540253
+Current time: 274000
+control.graphPL: 2.6273327332733274
 Current time: 275000
-2.670957095709571
+control.graphPL: 2.6274127412741275
 Current time: 276000
-control.graphPL: 2.673067306730673
+control.graphPL: 2.626672667266727
 Current time: 277000
-control.graphPL: 2.6714671467146713
+control.graphPL: 2.6275727572757277
 Current time: 278000
-control.graphPL: 2.67002700270027
+control.graphPL: 2.62989298929893
 Current time: 279000
-control.graphPL: 2.673207320732073
+control.graphPL: 2.6322732273227323
 Current time: 280000
-control.graphPL: 2.675017501750175
+control.graphPL: 2.6265526552655265
 Current time: 281000
-control.graphPL: 2.6717071707170716
+control.graphPL: 2.6275127512751277
 Current time: 282000
-control.graphPL: 2.665846584658466
-control.graphPL: 2.671117111711171
+control.graphPL: 2.62992299229923
 control.graphPL: Current time: 283000
-2.6710671067106713
+2.6307530753075308
 Current time: 284000
-control.graphPL: 2.6697269726972697
+control.graphPL: 2.6312331233123314
 Current time: 285000
-control.graphPL: 2.6843884388438846
-Current time: 286000
-control.graphPL: 2.6861986198619863
+control.graphPL: 2.63003300330033
+control.graphPL: Current time: 286000
+2.632813281328133
 Current time: 287000
-control.graphPL: 2.6835083508350834
+control.graphPL: 2.634953495349535
 Current time: 288000
-control.graphPL: 2.685838583858386
+control.graphPL: 2.6331333133313333
 Current time: 289000
-control.graphPL: 2.6806880688068806
+control.graphPL: 2.632973297329733
 Current time: 290000
-control.graphPL: 2.6845584558455844
-control.graphPL: Current time: 291000
-2.6723572357235725
+control.graphPL: 2.632953295329533
+Current time: 291000
+control.graphPL: 2.6308130813081307
 Current time: 292000
-control.graphPL: 2.672097209720972
+control.graphPL: 2.6313131313131315
 Current time: 293000
-control.graphPL: 2.6778577857785777
-control.graphPL: Current time: 294000
-2.6784778477847784
-control.graphPL: Current time: 295000
-2.6635963596359638
-control.graphPL: Current time: 296000
+control.graphPL: 2.630843084308431
+Current time: 294000
+control.graphPL: 2.6312831283128313
+Current time: 295000
+control.graphPL: 2.6317331733173317
+Current time: 296000
+control.graphPL: 2.632253225322532
 Current time: 297000
-2.6695369536953697
+control.graphPL: 2.632743274327433
 Current time: 298000
-control.graphPL: 2.674967496749675
-control.graphPL: 2.6632063206320633
+control.graphPL: 2.6373737373737374
 Current time: 299000
-control.graphPL: 2.663946394639464
+control.graphPL: 2.6396539653965396
 EDSimulator: queue is empty, quitting at time 299999
-Picked up JAVA_TOOL_OPTIONS: -Djava.net.preferIPv4Stack=true

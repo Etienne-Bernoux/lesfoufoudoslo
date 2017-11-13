@@ -64,6 +64,9 @@ public class BasicShuffle  implements Linkable, EDProtocol, CDProtocol{
 	// Node waiting for a response from a shuffling operation
 	private List<Entry> subset;
 	
+	// buffer remove Q
+	private Entry bufferRemove;
+	
 	/**
 	 * Constructor that initializes the relevant simulation parameters and
 	 * other class variables.
@@ -78,6 +81,7 @@ public class BasicShuffle  implements Linkable, EDProtocol, CDProtocol{
 
 		this.cache = new ArrayList<Entry>(size);
 		this.isWaiting = false;
+		this.bufferRemove = null;
 	}
 
 	/* START YOUR IMPLEMENTATION FROM HERE
@@ -97,10 +101,14 @@ public class BasicShuffle  implements Linkable, EDProtocol, CDProtocol{
 		
 		// 1. If P is waiting for a response from a shuffling operation initiated in a previous cycle, return;
 		if(this.isWaiting)
+		{
 			return;
+		}
 		// 2. If P's cache is empty, return;
 		if(this.cache.isEmpty())
+		{
 			return;
+		}
 		// 3. Select a random neighbor (named Q) from P's cache to initiate the shuffling;
 		//	  - You should use the simulator's common random source to produce a random number: CommonState.r.nextInt(cache.size())
 		int indexQ = CommonState.r.nextInt(this.cache.size());
@@ -109,6 +117,7 @@ public class BasicShuffle  implements Linkable, EDProtocol, CDProtocol{
 		if (this.cache.size() >= this.size)
 		{
 			this.cache.remove(indexQ);
+			this.bufferRemove = Q;
 		}
 		// 5. Select a subset of other l - 1 random neighbors from P's cache;
 		//	  - l is the length of the shuffle exchange
@@ -120,6 +129,13 @@ public class BasicShuffle  implements Linkable, EDProtocol, CDProtocol{
 		for(Entry e: this.subset)
 		{
 			e.setSentTo(Q.getNode());
+		}
+		for(Entry e: this.cache)
+		{
+			if(this.subset.contains(e))
+			{
+				e.setSentTo(Q.getNode());
+			}
 		}
 		// 7. Send a shuffle request to Q containing the subset;
 		//	  - Keep track of the nodes sent to Q
@@ -170,24 +186,34 @@ public class BasicShuffle  implements Linkable, EDProtocol, CDProtocol{
 				Transport tr = (Transport) nodeQ.getProtocol(tid);
 				tr.send(nodeQ, nodeP, answer, pid);
 			}
-			
-		//	  2. Q selects a random subset of size l of its own neighbors; 
-			this.subset = this.getShuffleEntryWithout(this.l, new Entry(nodeP));
-			for(Entry e: this.subset)
+			else
 			{
-				e.setSentTo(nodeP);
+			
+			//	  2. Q selects a random subset of size l of its own neighbors; 
+				this.subset = this.getShuffleEntryWithout(this.l, new Entry(nodeP));
+				for(Entry e: this.subset)
+				{
+					e.setSentTo(nodeP);
+				}
+				for(Entry e: this.cache)
+				{
+					if(this.subset.contains(e))
+					{
+						e.setSentTo(nodeP);
+					}
+				}
+			//	  3. Q reply P's shuffle request by sending back its own subset;
+				GossipMessage answer = new GossipMessage(nodeQ, this.subset);
+				answer.setType(MessageType.SHUFFLE_REPLY);
+				Transport tr = (Transport) nodeQ.getProtocol(tid);
+				tr.send(nodeQ, nodeP, answer, pid);			
+			//	  4. Q updates its cache to include the neighbors sent by P:
+			//		 - No neighbor appears twice in the cache
+			//		 - Use empty cache slots to add the new entries
+			//		 - If the cache is full, you can replace entries among the ones sent to P with the
+			//				new ones
+				this.mergeEntriesFromWithout(message.getShuffleList(), nodeP, new Entry(nodeQ));
 			}
-		//	  3. Q reply P's shuffle request by sending back its own subset;
-			GossipMessage answer = new GossipMessage(nodeQ, this.subset);
-			answer.setType(MessageType.SHUFFLE_REPLY);
-			Transport tr = (Transport) nodeQ.getProtocol(tid);
-			tr.send(nodeQ, nodeP, answer, pid);			
-		//	  4. Q updates its cache to include the neighbors sent by P:
-		//		 - No neighbor appears twice in the cache
-		//		 - Use empty cache slots to add the new entries
-		//		 - If the cache is full, you can replace entries among the ones sent to P with the
-		//				new ones
-			this.mergeEntriesFromWithout(message.getShuffleList(), nodeP, new Entry(nodeQ));
 			break;
 		
 		// If the message is a shuffle reply:
@@ -206,8 +232,13 @@ public class BasicShuffle  implements Linkable, EDProtocol, CDProtocol{
 		// If the message is a shuffle rejection:
 		case SHUFFLE_REJECTED:
 		//	  1. If P was originally removed from Q's cache, add it again to the cache.
-			if(!this.contains(message.getNode()))
-				this.addNeighbor(message.getNode());
+			if (this.bufferRemove != null)
+			{
+				Entry e = new Entry(this.bufferRemove.getNode());
+				e.setSentTo(this.bufferRemove.getSentTo());
+				this.cache.add(e);
+				this.bufferRemove = null;
+			}
 		//	  2. Q is no longer waiting for a shuffle reply;
 			this.isWaiting = false;
 			break;
@@ -227,19 +258,21 @@ public class BasicShuffle  implements Linkable, EDProtocol, CDProtocol{
 			return subset;
 		}
 		List<Integer> indexes = new ArrayList<Integer>();
-//		for(int i = 0; i < this.cache.size(); i ++)
-//		{
-//			indexes.add(i, i);
-//		}
-//		Collections.shuffle(indexes);
-		while(indexes.size() != this.cache.size())
+		for(int i = 0; i < this.cache.size(); i ++)
 		{
-			Integer rand = new Integer(CommonState.r.nextInt(this.cache.size()));
-			if(!indexes.contains(rand))
-			{
-				indexes.add(rand);
-			}
+			indexes.add(i, i);
 		}
+		Collections.shuffle(indexes);
+//		while(indexes.size() != this.cache.size())
+//		{
+//			Integer rand = new Integer(CommonState.r.nextInt(this.cache.size()));
+//			if(!indexes.contains(rand))
+//			{
+//				indexes.add(rand);
+//			}
+//		}
+		
+		
 //		boolean inside = false;
 //		int upto = Integer.min(nbEntry, this.cache.size());
 //		for(int i = 0; i < upto; i ++)
@@ -266,109 +299,46 @@ public class BasicShuffle  implements Linkable, EDProtocol, CDProtocol{
 		return subset;
 	}
 	
-	private void mergeEntriesFromWithout(List<Entry> subset, Node nodeFrom, Entry forbiden)
+	private void mergeEntriesFromWithout(List<Entry> subset, Node nodeTo, Entry forbiden)
 	{
+		// init new cache
+		Set<Entry> newCache = new HashSet<Entry>();
+		// shuffle the cache before use it
+		List<Entry> cacheShuffle = this.getShuffleEntryWithout(this.cache.size(), forbiden);
 		
-		Queue<Entry> subsetToAdd = new LinkedList<Entry>(subset);
-		
-		while(!subsetToAdd.isEmpty() && this.cache.size() < this.size)
-		{
-			Entry e = subsetToAdd.poll();
-			if(!this.cache.contains(e) && !e.equals(forbiden))
-			{
-				this.cache.add(e);
-			}
-		}
-		
-		Entry eToAdd = subsetToAdd.poll();
-		while((this.cache.contains(eToAdd) || forbiden.equals(eToAdd)) && eToAdd != null)
-		{
-			eToAdd = subsetToAdd.poll();
-		}
-		
-		if(eToAdd != null)
-		{
 
-//			System.out.println(eToAdd);
-			int i = 0;
-			Entry marker1 = eToAdd;
-			Entry marker2 = eToAdd;
-			boolean next = true;
-			while(!subsetToAdd.isEmpty() && next)
+		
+		// First add the remaining cache without those sent by nodeFrom
+		Queue<Entry> queuePriorityCache = new LinkedList<Entry>(cacheShuffle);
+		Queue<Entry> queueRemindingCache = new LinkedList<Entry>();
+		while(newCache.size() < this.size && !queuePriorityCache.isEmpty())
+		{
+			Entry e = queuePriorityCache.poll();
+			if(nodeTo.equals(e.getSentTo()))
 			{
-//				System.out.println(i);
-				Entry e = this.cache.get(i);
-//				System.out.println(e.getSentTo());
-				if(e.getSentTo() == null || e.getSentTo().equals(nodeFrom))
-				{
-					this.cache.set(i, eToAdd);
-//					System.out.println("fill");
-					// update eToAdd
-					eToAdd = subsetToAdd.poll();
-					while(this.cache.contains(eToAdd) && eToAdd != null)
-					{
-						eToAdd = subsetToAdd.poll();
-					}
-				}
-				
-				i = (i + 1)% this.size;
-				if(i%this.size == 0)
-				{
-					marker2 = eToAdd;
-					if(marker1.equals(marker2))
-					{
-						next = false;
-					}
-					else
-					{
-						marker1 = eToAdd;
-					}
-				}
+				queueRemindingCache.add(e);
+			}
+			else
+			{
+				newCache.add(e);
 			}
 		}
 		
+		// Second add the subset that we have received
+		for(int i = 0; i < subset.size() && newCache.size() < this.size; i ++)
+		{
+			Entry e = subset.get(i);
+			newCache.add(e);
+		}
 		
-//		Set<Entry> newCache = new HashSet<Entry>();
-//		// shuffle the cache before use it
-//		List<Entry> cacheShuffle = this.getShuffleEntryWithout(this.cache.size(), forbiden);
-//		Queue<Entry> queueNodeFrom = new LinkedList<Entry>();
-//		
-//		// First add the subset that we have received
-//		for(Entry e: subset)
-//		{
-//			// If it is a node from the nodeFrom, we will add after if possible
-//			if(e.getSentTo().equals(nodeFrom))
-//			{
-//				queueNodeFrom.add(e);
-//			}
-//			// Otherwise, we add
-//			else
-//			{
-//				newCache.add(e);
-//			}
-//		}
-//		
-//		// Then add the remaining cache without those sent by nodeFrom
-//		Queue<Entry> queueRemaindingCache = new LinkedList<Entry>(cacheShuffle);
-//		while(newCache.size() < this.size && !queueRemaindingCache.isEmpty())
-//		{
-//			Entry e = queueRemaindingCache.poll();
-//			if(!newCache.contains(e))
-//			{
-//				newCache.add(e);
-//			}
-//		}
-//		// if we have some remaining space, we add those sent by nodeFrom
-//		while(newCache.size() < this.size && !queueNodeFrom.isEmpty())
-//		{
-//			Entry e = queueNodeFrom.poll();
-//			if(!newCache.contains(e))
-//			{
-//				newCache.add(e);
-//			}
-//		}		
-//		
-//		this.cache = new ArrayList<Entry>(newCache);
+		// if we have some remaining space, we add those sent by nodeFrom
+		while(newCache.size() < this.size && !queueRemindingCache.isEmpty())
+		{
+			Entry e = queueRemindingCache.poll();
+			newCache.add(e);
+		}		
+		
+		this.cache = new ArrayList<Entry>(newCache);
 		
 	}
 /* The following methods are used only by the simulator and don't need to be changed */
