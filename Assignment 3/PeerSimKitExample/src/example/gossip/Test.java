@@ -54,11 +54,11 @@ public class Test {
 
 		System.out.println(l1);
 
-		l3 = Test.getShuffleEntryWithout(5, null, l1);
-		l4 = Test.getShuffleEntryWithout(5, null, l2);
+		l3 = Test.getShuffleEntryWithout(6, new Integer(3), l1);
+//		l4 = Test.getShuffleEntryWithout(4, new Integer(3), l2);
 
 		System.out.println(l3);
-		System.out.println(l4);
+//		System.out.println(l4);
 		
 
 	}
