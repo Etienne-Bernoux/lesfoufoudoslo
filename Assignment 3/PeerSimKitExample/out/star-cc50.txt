@@ -2,6 +2,9 @@ Simulator: loading configuration
 ConfigProperties: File ./conf/start/cc50.conf loaded.
 Simulator: starting experiment 0 invoking peersim.edsim.EDSimulator
 Random seed: 1234567890
+
+
+
 EDSimulator: resetting
 Network: no node defined, using GeneralNode
 EDSimulator: running initializers
@@ -9,13 +12,46 @@ EDSimulator: running initializers
 - Running initializer init.wire: class peersim.dynamics.WireStar
 EDSimulator: loaded controls [control.degree, control.graphPL]
 Current time: 0
-
-
-
 control.graphPL: 0.999 
 Current time: 1000
-control.graphPL: 0.2684852433254706 
+control.graphPL: 0.26403828233204096 
 Current time: 2000
-control.graphPL: 0.37182378810915695 
+control.graphPL: 0.3656337027119521 
 Current time: 3000
+control.graphPL: 0.37140808568811173 
+Current time: 4000
+control.graphPL: 0.34185151076011533 
+Current time: 5000
+control.graphPL: 0.30180886988784933 
+Current time: 6000
+control.graphPL: 0.2708809484343446 
+Current time: 7000
+control.graphPL: 0.2338645170459943 
+Current time: 8000
+control.graphPL: 0.20429549014910808 
+Current time: 9000
+control.graphPL: 0.18223510465004827 
+Current time: 10000
+control.graphPL: 0.1622757989385153 
+Current time: 11000
+control.graphPL: 0.14971980452107908 
+Current time: 12000
+control.graphPL: 0.1362591264093616 
+Current time: 13000
+control.graphPL: 0.12922548061934852 
+Current time: 14000
+control.graphPL: 0.11892834551970134 
+Current time: 15000
+control.graphPL: 0.11389509604029086 
+Current time: 16000
+control.graphPL: 0.10816627243643108 
+Current time: 17000
+control.graphPL: 0.10545357375217394 
+Current time: 18000
+control.graphPL: 0.10071169365951035 
+Current time: 19000
+control.graphPL: 0.09772240861486704 
+Current time: 20000
+control.graphPL: 0.09524936951285672 
+Current time: 21000
 control.graphPL: 

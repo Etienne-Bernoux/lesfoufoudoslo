@@ -3,7 +3,9 @@ package example.gossip;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Random;
 import java.util.Set;
 
@@ -114,7 +116,13 @@ public class BasicShuffle  implements Linkable, EDProtocol, CDProtocol{
 		this.subset = this.getShuffleEntryWithout(this.l - 1, Q);
 			
 		// 6. Add P to the subset;
+		if(subset.contains(new Entry(node)))
+			System.out.println("###################################");
 		subset.add(new Entry(node));
+		for(Entry e: this.subset)
+		{
+			e.setSentTo(Q.getNode());
+		}
 		// 7. Send a shuffle request to Q containing the subset;
 		//	  - Keep track of the nodes sent to Q
 		//	  - Example code for sending a message:
@@ -166,7 +174,11 @@ public class BasicShuffle  implements Linkable, EDProtocol, CDProtocol{
 			}
 			
 		//	  2. Q selects a random subset of size l of its own neighbors; 
-			this.subset = this.getShuffleEntryWithout(this.l, null);
+			this.subset = this.getShuffleEntryWithout(this.l, new Entry(nodeP));
+			for(Entry e: this.subset)
+			{
+				e.setSentTo(nodeP);
+			}
 		//	  3. Q reply P's shuffle request by sending back its own subset;
 			GossipMessage answer = new GossipMessage(nodeQ, this.subset);
 			answer.setType(MessageType.SHUFFLE_REPLY);
@@ -211,30 +223,47 @@ public class BasicShuffle  implements Linkable, EDProtocol, CDProtocol{
 	
 	private List<Entry> getShuffleEntryWithout(int nbEntry, Entry forbidenEntry)
 	{
-		List<Entry> subset = new ArrayList<Entry>(nbEntry);
+		List<Entry> subset = new ArrayList<Entry>();
 		if(this.cache.isEmpty())
 		{
 			return subset;
 		}
-		List<Integer> indexes = new ArrayList<Integer>(this.cache.size());
-		for(int i = 0; i < this.cache.size(); i ++)
+		List<Integer> indexes = new ArrayList<Integer>();
+//		for(int i = 0; i < this.cache.size(); i ++)
+//		{
+//			indexes.add(i, i);
+//		}
+//		Collections.shuffle(indexes);
+		while(indexes.size() != this.cache.size())
 		{
-			indexes.add(i, i);
+			Integer rand = new Integer(CommonState.r.nextInt(this.cache.size()));
+			if(!indexes.contains(rand))
+			{
+				indexes.add(rand);
+			}
 		}
-		Collections.shuffle(indexes);
-		boolean inside = false;
-		int upto = Integer.min(nbEntry, this.cache.size());
-		for(int i = 0; i < upto; i ++)
+//		boolean inside = false;
+//		int upto = Integer.min(nbEntry, this.cache.size());
+//		for(int i = 0; i < upto; i ++)
+//		{
+//			Entry e = this.cache.get(indexes.get(i));
+//			if (e.equals(forbidenEntry))
+//				inside = true;
+//			else
+//				subset.add(e);
+//		}
+//		/* And the end we check if  */
+//		if(inside && upto < this.cache.size())
+//			subset.add(this.cache.get(indexes.get(upto)));
+		
+		
+		Queue<Integer> queueRemaindingCacheIndex = new LinkedList<Integer>(indexes);
+		while(subset.size() < nbEntry && !queueRemaindingCacheIndex.isEmpty())
 		{
-			Entry e = this.cache.get(indexes.get(i));
-			if (e.equals(forbidenEntry))
-				inside = true;
-			else
+			Entry e = this.cache.get(queueRemaindingCacheIndex.poll());
+			if(!(e.equals(forbidenEntry) || subset.contains(e)))
 				subset.add(e);
 		}
-		/* And the end we check if  */
-		if(inside && upto < this.cache.size())
-			subset.add(this.cache.get(indexes.get(upto)));
 		
 		return subset;
 	}
@@ -242,6 +271,7 @@ public class BasicShuffle  implements Linkable, EDProtocol, CDProtocol{
 	private void mergeEntries(List<Entry> subset)
 	{
 		Set<Entry> newCache = new HashSet<Entry>();
+		// shuffle the cache before use it
 		List<Entry> cacheShuffle = this.getShuffleEntryWithout(this.cache.size(), null);
 		for(Entry e: subset)
 		{
@@ -253,6 +283,28 @@ public class BasicShuffle  implements Linkable, EDProtocol, CDProtocol{
 		}
 		
 		this.cache = new ArrayList<Entry>(newCache);
+		
+//		List<Entry> newCache = new ArrayList<Entry>();
+//		List<Entry> cacheShuffle = this.getShuffleEntryWithout(this.cache.size(), null);
+//		Queue<Entry> queueRemaindingCache = new LinkedList<Entry>(cacheShuffle);
+//		for(Entry e: subset)
+//		{
+//			if(!newCache.contains(e))
+//			{
+//				newCache.add(e);
+//			}
+//		}
+//		while(newCache.size() < this.size && !queueRemaindingCache.isEmpty())
+//		{
+//			Entry e = queueRemaindingCache.poll();
+//			if(!newCache.contains(e))
+//			{
+//				newCache.add(e);
+//			}
+//		}
+//		this.cache = newCache;
+		
+		
 	}
 /* The following methods are used only by the simulator and don't need to be changed */
 	
