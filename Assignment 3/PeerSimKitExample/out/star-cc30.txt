@@ -1,0 +1,22 @@
+Simulator: loading configuration
+ConfigProperties: File ./conf/start/cc30.conf loaded.
+Simulator: starting experiment 0 invoking peersim.edsim.EDSimulator
+
+
+
+Random seed: 1234567890
+EDSimulator: resetting
+Network: no node defined, using GeneralNode
+EDSimulator: running initializers
+- Running initializer init.sch: class peersim.edsim.CDScheduler
+- Running initializer init.wire: class peersim.dynamics.WireStar
+EDSimulator: loaded controls [control.degree, control.graphPL]
+control.graphPL: Current time: 0
+0.999 
+Current time: 1000
+control.graphPL: 0.3238486779674693 
+Current time: 2000
+control.graphPL: Current time: 3000
+0.4272685597973693 
+control.graphPL: 0.39931499896121003 
+control.graphPL: Current time: 4000
