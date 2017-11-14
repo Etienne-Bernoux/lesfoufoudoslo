@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,22 +15,24 @@ public class ParseFile {
     {
         File fileToBeModified = new File(pathSrc);
         BufferedReader reader = null;
-        FileWriter writer = null;
-        
-        Pattern pattern = Pattern.compile("([0-9]+.[0-9]{11,})");
+        PrintWriter writer = null;
+
+        Pattern pattern = Pattern.compile("([0-9]+.[0-9]+)");
          
         try
         {
-            writer = new FileWriter(pathDst);
+            writer = new PrintWriter(pathDst, "ASCII");
         	reader = new BufferedReader(new FileReader(fileToBeModified));
             //Reading all the lines of input text file into oldContent
+        	
+        	
             String line = reader.readLine();
             while (line != null) 
             {
             	Matcher matcher = pattern.matcher(line);
             	if(matcher.find())
             	{
-                    writer.write(matcher.group(1)+"\n");
+                    writer.println(matcher.group(1));
             	}
                 line = reader.readLine();
             }  
@@ -73,6 +76,7 @@ public class ParseFile {
             	Matcher matcher = pattern.matcher(line);
             	if(matcher.find())
             	{
+            		System.out.println("Find");
                     writer.write(matcher.group(1)+"\n");
             	}
                 line = reader.readLine();
