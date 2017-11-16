@@ -6,8 +6,6 @@ Student at University of Oslo.
 # Open distributed processing - Assignment n°3
 
 
-
-
 ## Run
 
 • rull-all.ps1: 

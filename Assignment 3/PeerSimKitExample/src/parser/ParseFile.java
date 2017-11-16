@@ -27,11 +27,14 @@ public class ParseFile {
         	
         	
             String line = reader.readLine();
+//            System.out.println(line);
             while (line != null) 
             {
+                System.out.println(line);
             	Matcher matcher = pattern.matcher(line);
             	if(matcher.find())
             	{
+            		System.out.println(matcher.group(1));
                     writer.println(matcher.group(1));
             	}
                 line = reader.readLine();

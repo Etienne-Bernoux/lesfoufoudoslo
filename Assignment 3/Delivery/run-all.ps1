@@ -7,12 +7,12 @@ New-Item ./plot/star -type directory
 
 # Random
 Write-Output "Random Simulator"
-java -jar .\Simulator.jar ./conf/random/ccRandom30.conf > ./out/random-ccRandom30.txt
-java -jar ./Simulator.jar ./conf/random/ccRandom50.conf > ./out/random-ccRandom50.txt
-java -jar ./Simulator.jar ./conf/random/idRandom30.conf > ./out/random-idRandom30.txt
-java -jar ./Simulator.jar ./conf/random/idRandom50.conf > ./out/random-idRandom50.txt
-java -jar ./Simulator.jar ./conf/random/paRandom30.conf > ./out/random-paRandom30.txt
-java -jar ./Simulator.jar ./conf/random/paRandom50.conf > ./out/random-paRandom50.txt
+#java -jar ./Simulator.jar ./conf/random/ccRandom30.conf > ./out/random-ccRandom30.txt
+#java -jar ./Simulator.jar ./conf/random/ccRandom50.conf > ./out/random-ccRandom50.txt
+#java -jar ./Simulator.jar ./conf/random/idRandom30.conf > ./out/random-idRandom30.txt
+#java -jar ./Simulator.jar ./conf/random/idRandom50.conf > ./out/random-idRandom50.txt
+#java -jar ./Simulator.jar ./conf/random/paRandom30.conf > ./out/random-paRandom30.txt
+#java -jar ./Simulator.jar ./conf/random/paRandom50.conf > ./out/random-paRandom50.txt
 
 
 # Ring
