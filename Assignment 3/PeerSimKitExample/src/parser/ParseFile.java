@@ -17,7 +17,7 @@ public class ParseFile {
         BufferedReader reader = null;
         PrintWriter writer = null;
 
-        Pattern pattern = Pattern.compile("([0-9]+.[0-9]+)");
+        Pattern pattern = Pattern.compile("([0-9]+\\.[0-9]+)");
          
         try
         {
@@ -27,14 +27,12 @@ public class ParseFile {
         	
         	
             String line = reader.readLine();
-//            System.out.println(line);
             while (line != null) 
             {
-                System.out.println(line);
+            	line = line.replaceAll("[^0-9\\.]", "");
             	Matcher matcher = pattern.matcher(line);
             	if(matcher.find())
             	{
-            		System.out.println(matcher.group(1));
                     writer.println(matcher.group(1));
             	}
                 line = reader.readLine();
@@ -74,15 +72,18 @@ public class ParseFile {
         	reader = new BufferedReader(new FileReader(fileToBeModified));
             //Reading all the lines of input text file into oldContent
             String line = reader.readLine();
-            while (line != null) 
+            int i = 0;
+            while (line != null && i < 200) 
             {
+            	line = line.replaceAll("[^0-9\\.]", "");
             	Matcher matcher = pattern.matcher(line);
             	if(matcher.find())
             	{
-            		System.out.println("Find");
                     writer.write(matcher.group(1)+"\n");
+                    i ++;
             	}
                 line = reader.readLine();
+                
             }  
         }
         catch (IOException e)

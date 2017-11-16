@@ -11,6 +11,9 @@ Student at University of Oslo.
 • rull-all.ps1: 
 	Usage: $./rull-all.ps1
 
+• gnuplot:
+	go to ./plot directory and doucle-click your desired gnuplot script. 	
+
 
 ## The code
 
